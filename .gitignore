@@ -1,6 +1,6 @@
 *.exe
-.vscode/*
+**/.vscode
 *.txt
-Debug/*
-Release/*
-.vs/*
+**/Debug
+**/Release
+**/.vs
