@@ -5,7 +5,7 @@
 
 class CommonErrorHandler
 {
-    public:
+public:
     enum class Priority {
         NOTIFICATION = 0,
         WARNING      = 1,
@@ -17,13 +17,14 @@ private:
     std::function<void(const std::string&)> HandleNotification;
     std::function<void(const std::string&)> HandleWarning;
     std::function<void(const std::string&)> HandleError;
+
 public:
-    void SetPriority (Priority p);
-    void SetHandleNotification  (std::function<void(const std::string&)> f);
-    void SetHandleWarning       (std::function<void(const std::string&)> f);
-    void SetHandleError         (std::function<void(const std::string&)> f);
-    CommonErrorHandler(/* args */);
-    ~CommonErrorHandler();
-    CommonErrorHandler& operator<<(const std::string& str);
+    void SetPriority                (Priority p);
+    void SetHandleNotification      (std::function<void(const std::string&)> f);
+    void SetHandleWarning           (std::function<void(const std::string&)> f);
+    void SetHandleError             (std::function<void(const std::string&)> f);
+    CommonErrorHandler              ();
+    ~CommonErrorHandler             ();
+    CommonErrorHandler& operator<<  (const std::string& str);
 };
 
