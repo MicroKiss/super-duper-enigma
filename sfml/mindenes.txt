@@ -1,0 +1,5 @@
+sfml le kell tölteni h menjen :)
+
+
+nov 27
+3 fal, karakter meg lövés 44mb ot eszik
