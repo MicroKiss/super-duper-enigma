@@ -1,3 +1,6 @@
 *.exe
 .vscode/*
 *.txt
+Debug/*
+Release/*
+.vs/*

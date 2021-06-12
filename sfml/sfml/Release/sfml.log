@@ -1,0 +1,2 @@
+﻿  main.cpp
+D:\programming\sfml\sfml\main.cpp(15,28): error C2677: binary '<<': no global operator found which takes type 'sf::Event::KeyEvent' (or there is no acceptable conversion)
