@@ -39,7 +39,7 @@ namespace CEH
         void SetWarningHandle           (std::function<void(const std::string&)> f);
         void SetErrorHandle             (std::function<void(const std::string&)> f);
 
-        Priority                                GetPriority         () const;        
+        Priority                                GetPriority                () const;        
         std::function<void(const std::string&)> GetNotificationHandle      () const;
         std::function<void(const std::string&)> GetWarningHandle           () const;
         std::function<void(const std::string&)> GetErrorHandle             () const;
