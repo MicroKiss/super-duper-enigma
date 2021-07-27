@@ -56,7 +56,7 @@ public:
 	{
 		attributes.movSpeed *= 2;
 		attributes.attackSpeed *= 10;
-		attributes.jumpSpeed *= 1.3;
+		attributes.jumpSpeed *= 1.3f;
 	}
 };
 
@@ -87,6 +87,20 @@ private:
 	size_t id;
 };
 
+
+class Controls
+{
+public:
+	int attack;
+	int moveRight;
+	int moveUp;
+	int moveLeft;
+	int moveDown;
+	int powerMove;
+	int pause;
+};
+
+
 class Player : public Entity
 {
 public:
@@ -99,8 +113,10 @@ public:
 
 	bool CanAttack ();
 public:
+	float vsp = 0;
+	float hsp = 0;
 	Attributes attributes;
-
+	Controls controls;
 	std::list<AttributeModifier *> buffs;
 private:
 };

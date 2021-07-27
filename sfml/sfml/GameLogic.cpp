@@ -2,16 +2,24 @@
 
 Entity *GameLogic::AddEntity (Entity *ent)
 {
-	if (ent->type == EntityType::Player)
-		player = static_cast<Player *> (ent);
+	if (ent->type == EntityType::Player) {
+		assert (player2 == nullptr);
+	if (player1 == nullptr)
+		player1 = static_cast<Player *> (ent);
+	else
+		player2 = static_cast<Player *> (ent);
+	}
 
 	entities->push_back (ent);
 	return ent;
 }
+
+
 void GameLogic::RemoveEntity (Entity *ent)
 {
 	entities->remove (ent);
 }
+
 
 void GameLogic::RemoveEntity (size_t id)
 {
@@ -19,15 +27,19 @@ void GameLogic::RemoveEntity (size_t id)
 		return ent->GetID () == id;
 		});
 }
-bool GameLogic::IsPressed (Input button)
+
+
+bool GameLogic::IsPressed (int button)
 {
 	return inputs->contains (static_cast<sf::Keyboard::Key> (button));
 }
+
 
 void GameLogic::SetInputs (std::set<sf::Keyboard::Key> *inputsPointer)
 {
 	inputs = inputsPointer;
 }
+
 
 void GameLogic::SetEntities (std::list<Entity *> *entitiesPointer)
 {
@@ -38,7 +50,10 @@ void GameLogic::SetEntities (std::list<Entity *> *entitiesPointer)
 
 GameLogic::~GameLogic ()
 {
-	delete player;
+	if (player1)
+		delete player1;
+	if (player2)
+		delete player2;
 }
 
 void GameLogic::Update (float deltaTime)
@@ -62,28 +77,30 @@ void GameLogic::UpdatePlayer (Player *player, float deltaTime)
 	}
 
 
-	static float grav = 21;
-	static float maxFallSpeed = 500;
-	static float hsp = 0;
-	static float vsp = 0;
+	const static float grav = 21;
+	const static float maxFallSpeed = 500;
+	float& vsp = player->vsp;
+	float& hsp = player->hsp;
 
 	player->lastAttack -= deltaTime;
-	if (IsPressed (Input::attack) && player->CanAttack ()) {
+	if (IsPressed (player->controls.attack) && player->CanAttack ()) {
 		AddEntity (new Bullet (player->GetCenter (), player->lastDir));
 		player->lastAttack = 1.f / player->attributes.attackSpeed;
 	}
 
-	if (IsPressed (Input::powerMove) && player->buffs.empty ()) {
+	if (IsPressed (player->controls.powerMove) && player->buffs.empty ()) {
 		AttributeModifier *newbuff = new DoubleSpeedBuff;
 		player->buffs.push_back (newbuff);
 	}
 
-	short dir = (IsPressed (Input::moveRight) - IsPressed (Input::moveLeft));
+	short dir = (IsPressed (player->controls.moveDown) - IsPressed (player->controls.moveUp));
+	vsp = dir * player->attributes.movSpeed;
+	dir = (IsPressed (player->controls.moveRight) - IsPressed (player->controls.moveLeft));
 	hsp = dir * player->attributes.movSpeed;
 
 	if (dir == -1 || dir == 1)
 		player->lastDir = dir;
-
+	/*
 	if (vsp < maxFallSpeed)
 		vsp += grav;
 
@@ -96,12 +113,15 @@ void GameLogic::UpdatePlayer (Player *player, float deltaTime)
 		//while (!spacialIndex.CheckCollision (player->GetBoundingBox (0, 1), EntityType::Wall))
 		//	player->Move (0, 1);
 		vsp = 0;
-		vsp = (inputs->contains (sf::Keyboard::Key::W) | IsPressed (Input::jump)) * -player->attributes.jumpSpeed;
+		vsp = (IsPressed (player->controls.moveUp) ) * -player->attributes.jumpSpeed;
 	}
-
+	*/
 
 	if (spacialIndex.CheckCollision (player->GetBoundingBox (deltaTime * hsp), EntityType::Wall)) {
 		hsp = 0;
+	}
+	if (spacialIndex.CheckCollision (player->GetBoundingBox (0, deltaTime * vsp), EntityType::Wall)) {
+		vsp = 0;
 	}
 
 	player->Move (deltaTime * hsp, deltaTime * vsp);
@@ -158,9 +178,9 @@ void GameLogic::UpdateBullet (Bullet *bullet, float deltaTime)
 
 void GameLogic::UpdateEnemy (Enemy *enemy, float deltaTime)
 {
-	if (Distance (player->GetCenter ().x, player->GetCenter ().y, enemy->GetCenter ().x, enemy->GetCenter ().y) < 200)
+	if (Distance (player1->GetCenter ().x, player1->GetCenter ().y, enemy->GetCenter ().x, enemy->GetCenter ().y) < 200)
 	{
-		enemy->Move (Sign (player->GetCenter ().x - enemy->GetCenter ().x), 0);
+		enemy->Move (Sign (player1->GetCenter ().x - enemy->GetCenter ().x), 0);
 	}
 
 

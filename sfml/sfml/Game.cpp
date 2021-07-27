@@ -62,7 +62,29 @@ void Game::Draw ()
 
 void Game::Init ()
 {
-	gameLogic.AddEntity (new Player (sf::Vector2f (128*2, window->getSize ().y / 2.f)));
+	{
+		Entity* entity = gameLogic.AddEntity (new Player (sf::Vector2f (128*2, window->getSize ().y / 2.f)));
+		Player* player = static_cast<Player*> (entity);
+		player->controls.moveUp = sf::Keyboard::Key::W;
+		player->controls.moveLeft = sf::Keyboard::Key::A;
+		player->controls.moveDown = sf::Keyboard::Key::S;
+		player->controls.moveRight = sf::Keyboard::Key::D;
+		player->controls.attack = sf::Keyboard::Key::J;
+		player->controls.powerMove = sf::Keyboard::Key::K;
+		player->controls.pause = sf::Keyboard::Key::Escape;
+	}
+	{
+		Entity* entity = gameLogic.AddEntity (new Player (sf::Vector2f (128 * 3, window->getSize ().y / 2.f)));
+		Player* player = static_cast<Player*> (entity);
+		player->controls.moveUp = sf::Keyboard::Key::Up;
+		player->controls.moveLeft = sf::Keyboard::Key::Left;
+		player->controls.moveDown = sf::Keyboard::Key::Down;
+		player->controls.moveRight = sf::Keyboard::Key::Right;
+		player->controls.attack = sf::Keyboard::Key::Numpad1;
+		player->controls.powerMove = sf::Keyboard::Key::Numpad2;
+		player->controls.pause = sf::Keyboard::Key::Escape;
+	}
+
 
 	for (size_t i = 0; i < 1366/64; ++i)
 		gameLogic.AddEntity (new Wall (sf::Vector2f (64*i, window->getSize ().y / 2.f + 300)));
@@ -75,27 +97,27 @@ void Game::Init ()
 
 }
 
-void Game::KeyDown (Input button)
+void Game::KeyDown (int button)
 {
 	inputs.insert (static_cast<sf::Keyboard::Key> (button));
 }
 
 
-void Game::HandleJoystickButtonPressed (unsigned int buttonCode)
+void Game::HandleJoystickButtonPressed (unsigned int buttonCode, const Controls& controls)
 {
 	switch (buttonCode)
 	{
 	case 0: //A
-		KeyDown (Input::jump);
+		KeyDown (controls.moveUp);
 		break;
 	case 1: //B
-		KeyDown (Input::powerMove);
+		KeyDown (controls.powerMove);
 		break;
 	case 2: //X
-		KeyDown (Input::attack);
+		KeyDown (controls.attack);
 		break;
 	case 3: //Y
-		KeyDown (Input::pause);
+		KeyDown (controls.pause);
 		paused = !paused;
 		break;
 	default:
@@ -103,38 +125,38 @@ void Game::HandleJoystickButtonPressed (unsigned int buttonCode)
 	}
 }
 
-void Game::HandleJoystickButtonReleased (unsigned int buttonCode)
+void Game::HandleJoystickButtonReleased (unsigned int buttonCode, const Controls& controls)
 {
 	switch (buttonCode)
 	{
 	case 0: //A
-		inputs.erase (static_cast<sf::Keyboard::Key> (Input::jump));
+		inputs.erase (static_cast<sf::Keyboard::Key> (controls.moveUp));
 		break;
 	case 1: //B
-		inputs.erase (static_cast<sf::Keyboard::Key> (Input::powerMove));
+		inputs.erase (static_cast<sf::Keyboard::Key> (controls.powerMove));
 		break;
 	case 2: //X
-		inputs.erase (static_cast<sf::Keyboard::Key> (Input::attack));
+		inputs.erase (static_cast<sf::Keyboard::Key> (controls.attack));
 		break;
 	case 3: //Y
-		inputs.erase (static_cast<sf::Keyboard::Key> (Input::pause));
+		inputs.erase (static_cast<sf::Keyboard::Key> (controls.pause));
 		break;
 	default:
 		break;
 	}
 }
 
-void Game::HandleJoystickMove (sf::Joystick::Axis axis, float position)
+void Game::HandleJoystickMove (sf::Joystick::Axis axis, float position, const Controls& controls)
 {
 	switch (axis)
 	{
 	case sf::Joystick::X:
-		inputs.erase (static_cast<sf::Keyboard::Key> (Input::moveLeft));
-		inputs.erase (static_cast<sf::Keyboard::Key> (Input::moveRight));
+		inputs.erase (static_cast<sf::Keyboard::Key> (controls.moveLeft));
+		inputs.erase (static_cast<sf::Keyboard::Key> (controls.moveRight));
 		if (position < -30.f)
-			KeyDown (Input::moveLeft);
+			KeyDown (controls.moveLeft);
 		else if (position > 30.f)
-			KeyDown (Input::moveRight);
+			KeyDown (controls.moveRight);
 		break;
 	case sf::Joystick::Y:
 		break;
@@ -147,25 +169,25 @@ void Game::HandleJoystickMove (sf::Joystick::Axis axis, float position)
 void Game::HandleEvents ()
 {
 	static sf::Event event;
+	static Controls controls;
 	while (window->pollEvent (event)) {
 		switch (event.type) {
 		case sf::Event::KeyPressed:
 			inputs.insert (event.key.code);
-			if (event.key.code == static_cast<sf::Keyboard::Key> (Input::pause))
+			if (event.key.code == static_cast<sf::Keyboard::Key> (sf::Keyboard::Key::Escape))
 				paused = !paused;
 			break;
 		case sf::Event::JoystickButtonPressed:
-			//std::cout << "joystick button pressed!" << std::endl;
-			//std::cout << "joystick id: " << event.joystickButton.joystickId << std::endl;
-			HandleJoystickButtonPressed (event.joystickButton.button);
+			controls = event.joystickButton.joystickId == 0 ? gameLogic.player1->controls : gameLogic.player2->controls;
+			HandleJoystickButtonPressed (event.joystickButton.button, controls);
 			break;
 		case sf::Event::JoystickButtonReleased:
-			//std::cout << "joystick button pressed!" << std::endl;
-			//std::cout << "joystick id: " << event.joystickButton.joystickId << std::endl;
-			HandleJoystickButtonReleased (event.joystickButton.button);
+			controls = event.joystickButton.joystickId == 0 ? gameLogic.player1->controls : gameLogic.player2->controls;
+			HandleJoystickButtonReleased (event.joystickButton.button, controls);
 			break;
 		case sf::Event::JoystickMoved:
-			HandleJoystickMove (event.joystickMove.axis, event.joystickMove.position);
+			controls = event.joystickMove.joystickId == 0 ? gameLogic.player1->controls : gameLogic.player2->controls;
+			HandleJoystickMove (event.joystickMove.axis, event.joystickMove.position, controls);
 			break;
 		case sf::Event::KeyReleased:
 			inputs.erase (event.key.code);

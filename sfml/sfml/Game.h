@@ -21,15 +21,15 @@ public:
 private:
 	void Init ();
 	void HandleEvents ();
-	void HandleJoystickButtonPressed (unsigned int buttonCode);
-	void HandleJoystickButtonReleased (unsigned int buttonCode);
-	void HandleJoystickMove (sf::Joystick::Axis axis, float position);
+	void HandleJoystickButtonPressed (unsigned int buttonCode, const Controls& controls);
+	void HandleJoystickButtonReleased (unsigned int buttonCode, const Controls& controls);
+	void HandleJoystickMove (sf::Joystick::Axis axis, float position, const Controls& controls);
 
 
 private:
 	sf::Clock clock;
 	float deltaTime;
-	void KeyDown (Input button);
+	void KeyDown (int button);
 	bool alive;
 	sf::RenderWindow *window;
 	std::set<sf::Keyboard::Key> inputs;

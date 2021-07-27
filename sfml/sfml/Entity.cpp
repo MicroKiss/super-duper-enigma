@@ -132,12 +132,12 @@ void Bullet::Draw (sf::RenderWindow *const window, float deltaTime)
 
 int Bullet::GetX () const
 {
-	return pos.x;
+	return static_cast<int> (pos.x);
 }
 
 int Bullet::GetY () const
 {
-	return pos.y;
+	return static_cast<int> (pos.y);
 }
 
 int Bullet::GetLeft () const
@@ -180,12 +180,12 @@ void Wall::Init (sf::Vector2f pos)
 
 int Wall::GetX () const
 {
-	return pos.x;
+	return static_cast<int> (pos.x);
 }
 
 int Wall::GetY () const
 {
-	return pos.y;
+	return static_cast<int> (pos.y);
 }
 
 int Wall::GetLeft () const
@@ -231,12 +231,12 @@ void Enemy::Init (sf::Vector2f pos)
 
 int Enemy::GetX () const
 {
-	return pos.x;
+	return static_cast<int> (pos.x);
 }
 
 int Enemy::GetY () const
 {
-	return pos.y;
+	return static_cast<int> (pos.y);
 }
 
 int Enemy::GetLeft () const
