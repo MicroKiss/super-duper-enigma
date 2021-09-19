@@ -1,0 +1,491 @@
+datum: 10/10/17
+pontos ido: 18/10
+Kiss János
+    1  who
+    2  who
+    3  who am i
+    4  finger
+    5  who
+    6  clear
+    7  wo
+    8  who|wc -1
+    9  who|wc
+   10  finger
+   11  pwd
+   12  ls -l0919-szamalap.txt
+   13  ls -l 0919-szamalap.txt
+   14  scp
+   15  finger >mmaa
+   16  ls -l mmaa
+   17  dir
+   18  dir
+   19  cd
+   20  cd
+   21  dc
+   22  goto
+   23  pwd
+   24  finger >>asd
+   25  ol
+   26  scp
+   27  pts
+   28  stp
+   29  tsp
+   30  tp
+   31  scv
+   32  vcs
+   33  csv
+   34  cvs
+   35  cvs
+   36  dir
+   37  who >20170920.txt
+   38  quit
+   39  exit
+   40  who
+   41  who am i
+   42  help
+   43  help 2
+   44  help help
+   45  hepl -d
+   46  hlep -d
+   47  help -d
+   48  cs
+   49  ps
+   50  bash
+   51  who
+   52  who -a
+   53  man who
+   54  who -all
+   55  who
+   56  talk
+   57  talk vxkmfl [tty]
+   58  man talk
+   59  who
+   60  talk i1oip6 [tty11]
+   61  talk i1oip6 tty
+   62  talk i1oip6 tty2
+   63  talk i1oip6 tty23
+   64  talk i1oip6 
+   65  talk i1oip6 hello
+   66  talk i1oip6 [22]
+   67  talk i1oip6 [tty2]
+   68  talk i1oip6 [tty]
+   69  talk i1oip6 [tty]
+   70  talk i1oip6 [tty]
+   71  talk i1oip6 [tty]
+   72  talk i1oip6 [tty]
+   73  man talk
+   74  matched
+   75  talk i1oip6 [tty]
+   76  talk i1oip6 
+   77  who
+   78  panda
+   79    
+   80  pwd
+   81  mail
+   82  send
+   83  man mail
+   84  man talk
+   85  iot
+   86  man quit
+   87  man exit
+   88  exit
+   89  mesg
+   90  man mesg
+   91  mesg y
+   92  mesg
+   93  man mesg
+   94  who
+   95  write i1oip6
+   96  write i1oip6 ada
+   97  write i1oip6 panda
+   98  write i1oip6@panda
+   99  write i1oip6@panda.inf.elte.hu
+  100  write i1oip6
+  101  write i1oip6
+  102  message
+  103  talk i1oip6
+  104  exit
+  105  asdasd
+  106  who
+  107  who -a
+  108  finger
+  109  help
+  110  history
+  111  help 1
+  112  help 2
+  113  man help
+  114  help
+  115  cmd
+  116  tmd
+  117  mtc
+  118  mt
+  119  mc
+  120  finger
+  121  finger
+  122  who
+  123  who
+  124  mkdir 171003
+  125  cd 171003/
+  126  history |tail
+  127  finger
+  128  finger |grep "10.10"
+  129  history |head
+  130  history |517
+  131  man history
+  132  history write i1oip6
+  133  history mkdir 171003
+  134  echo history write i1oip6
+  135  history head 20 tail 20
+  136  ec
+  137  history
+  138  finger |grep "wall."
+  139  finger |grep "10.10"
+  140  finger |grep "wall." >171003-30csjel.txt
+  141  finger |grep "10.10" >>171003-30csjel.txt
+  142  cat 171003-30csjel.txt |wc -l
+  143  cat 171003-30csjel.txt
+  144  file 171003-30csjel.txt 
+  145  chmod g+w 171003-30csjel.txt 
+  146  ls -l 171003-30csjel.txt 
+  147  chmod a+w 171003-30csjel.txt 
+  148  ls -l 171003-30csjel.txt 
+  149  chmod 640 171003-30csjel.txt 
+  150  ls -l 171003-30csjel.txt 
+  151  cat >uj
+  152  ls -l
+  153  file uj
+  154  history
+  155  cat
+  156  cat
+  157  ln
+  158  ln man
+  159  man ln
+  160  fin / -name szamalap
+  161  find / -name szamalap
+  162  man ln
+  163  find / -name szamalap 2>/dev/null
+  164  cd
+  165  find . -name szamalap 2>/dev/null
+  166  find . -name szamalap 2>/dev/null
+  167  ls
+  168  kmdir szamalap
+  169  mkdir szamalap
+  170  find . -name szamalap 2>/dev/null
+  171  cd/..
+  172  ..
+  173  cd
+  174  ls -la |less
+  175  ls -la /proc/
+  176  cat /proc/meminfo 
+  177  ls -la /proc/
+  178  free
+  179  top
+  180  history
+  181  cd /szamalap
+  182  cd szamalap/
+  183  ls
+  184  cd/.. ls
+  185  cd.. ls
+  186  cd ls
+  187  cd
+  188  ls
+  189  ls -a
+  190  ls -l
+  191  l
+  192  which l
+  193  echo $PATH
+  194  cat /usr/local/bin/l
+  195  man ls
+  196  man ls
+  197  l/
+  198  l-
+  199  -l
+  200  l --col=never
+  201  l --col=never /
+  202  ll
+  203  clear
+  204  alias ll = ls -alFh
+  205  alias ll=ls -alFh
+  206  alias ll="ls -alFh"
+  207  ll
+  208  ll /
+  209  ll /tmp
+  210  ll /|less
+  211  ps
+  212  man bash
+  213  cat /etc/shells 
+  214  man sh
+  215  ps
+  216  ps -l
+  217  ps axf
+  218  sleep
+  219  sleep 20
+  220  sleep 20&
+  221  ps
+  222  sleep 60
+  223  sleep 60&
+  224  ps
+  225  kill -9 16271
+  226  kill -9 16271
+  227  sleep 60&
+  228  kill -9 16342
+  229  sleep 600&
+  230  jobs
+  231  kill -9 16366
+  232  sleep 600
+  233  ps
+  234  fg
+  235  help
+  236  sleep 10
+  237  sleep 1
+  238  nohup
+  239  nohup sleep 40
+  240  man nohup
+  241  cd
+  242  cd public/public_html/szamalap/
+  243  ls
+  244  -l
+  245  ls -l
+  246  ls -a
+  247  cd ..
+  248  ls
+  249  cd public/public_html/szamalap/
+  250  cd szamalap/
+  251  df -h
+  252  logout
+  253  ls
+  254  mkdir gyakorlas
+  255  ls
+  256  cd gyakorlas
+  257  ln -s /../szamalap/ szam
+  258  ls
+  259  cd szam
+  260  cd szam
+  261  cat szam
+  262  ls
+  263  ln -s /afs
+  264  ls
+  265  cd afs
+  266  cd ..
+  267  ls
+  268  ls
+  269  ls -l
+  270  dir
+  271  wat
+  272  wtd
+  273  wtf
+  274  history
+  275  people
+  276  finger
+  277  pwd
+  278  ln /afs/inf.elte.hu/user/v/vx/ vx
+  279  ln -s /afs/inf.elte.hu/user/v/vx/ vx
+  280  ls
+  281  vs
+  282  cd vs
+  283  cd vx
+  284  mkdir 213
+  285  ls
+  286  cd vxkmfl
+  287  ls
+  288  cd gyakorlas/
+  289  ls
+  290  cd vx
+  291  ls
+  292  cd vxkmfl/gyakorlas/vx
+  293  ls
+  294  cd gyakorlas/
+  295  ls -lai
+  296  rm afs
+  297  ls -lai
+  298  ls -a
+  299  cd public
+  300  -ls
+  301  ls -a
+  302  cd public_html/
+  303  ls
+  304  ls -a
+  305  cat .htaccess
+  306  logout
+  307  ls
+  308  rm zh1/*
+  309  yes
+  310  ls
+  311  cd zh1/
+  312  ls
+  313  rm zhhard.txt 
+  314  ls
+  315  rm -a zhhard.txt 
+  316  rm  zhhard.txt 
+  317  man rm
+  318  rm  -f zhhard.txt 
+  319  ls
+  320  cd ..
+  321  ls
+  322  rm -f zh1/*
+  323  rmdir zh1/
+  324  cd zh1
+  325  ls
+  326  ls .l
+  327  ls -l
+  328  ls -l
+  329  ls -la
+  330  rm .valami.txt.swp 
+  331  cd ..
+  332  rmdir zh1/
+  333  ls
+  334  vi index.html
+  335  ls
+  336  mkdir gyak
+  337  ls
+  338  mv index.html gyak/
+  339  ls
+  340  cd gyak/
+  341  ls
+  342  wrt
+  343  twr
+  344  history
+  345  pwd
+  346  echo wpd >home.txt
+  347  man mkdir
+  348  mkdir -p Egyetem/ELTE/IK
+  349  ls
+  350  cd Egyetem/
+  351  ls
+  352  cd ELTE
+  353  ls
+  354  cd ../../..
+  355  ls
+  356  cd gyak/
+  357  cd .
+  358  ls -l
+  359  ls -a
+  360  ls -la
+  361  ls -l
+  362  ls -la
+  363  ls
+  364  pé
+  365  éáéűáéáű
+  366  ls
+  367  cd Egyetem/ELTE/
+  368  cd IK/
+  369  "" > tmp1
+  370  echo  > tmp1
+  371  ls
+  372  cat tmp1
+  373  echo  > tmp2
+  374  ls -r
+  375  man ls
+  376  és _R
+  377  ls -R
+  378  pwd
+  379  home
+  380  cd ../../..
+  381  cd ..
+  382  ls
+  383  ls -l
+  384  man ls
+  385  man ls -c
+  386  man ls -sort
+  387  finger
+  388  mesg y
+  389  finger
+  390  talk ukyqle
+  391  talk ukyqle
+  392  talk ukyqlehello
+  393  talk ukyqlehello
+  394  talk ukyqle 
+  395  finger
+  396  talk ml9mf9
+  397  mesg y
+  398  talk ml9mf9
+  399  talk ml9mf9
+  400  talk ml9mf9
+  401  mesg y
+  402  talk ml9mf9
+  403  talk ml9mf9
+  404  na xd
+  405  ls
+  406  lslslsls
+  407  finger
+  408  talk asjf86
+  409  talk asjf86
+  410  yes
+  411  ces
+  412  yes 2
+  413  yes MARHA
+  414  yes  ICH BEN MICRO
+  415  sadas
+  416  das
+  417  d
+  418  sad
+  419  as
+  420  yes KISZH
+  421  yes AKARMIT
+  422  no adasd
+  423  yes yes
+  424  yes >> yes.txt
+  425  ls
+  426  cat yes.txt 
+  427  ls
+  428  rm yes.txt 
+  429  ls -la
+  430  cat .bash_history 
+  431  history
+  432  ls
+  433  ls -ls
+  434  ls -la
+  435  ls
+  436  wts
+  437  pwt
+  438  pwd
+  439  man man
+  440  sleep 123
+  441  history
+  442  nano asd
+  443  ls
+  444  rm gyak/*
+  445  rmdir gyak/*
+  446  rmdir -f gyak/*
+  447  rmdir -a gyak/*
+  448  rm -fr gyak
+  449  ls
+  450  man rm
+  451  logout
+  452  ls
+  453  ls
+  454  cd public
+  455  ls
+  456  cd public_html/
+  457  ls
+  458  cd szamalap
+  459  ls
+  460  date
+  461  time
+  462  date
+  463  date hhmm
+  464  date
+  465  date 
+  466  date %H %M
+  467  date "+DATE: %m/%d/%y%nTIME: %H:%M:%S"date "+DATE: %m/%d/%y%nTIME: %H:%M:%S"
+  468  date "+DATE: %m/%d/%y%nTIME: %H:%M:%S"
+  469  date "+pontos ido: %H/%m"
+  470  date
+  471  date "+pontos ido: %H/%m"
+  472  echo Kiss János
+  473  mkdir zh1
+  474  cd zh1
+  475  date >linux-hist-3.txt
+  476  date "+pontos ido: %H/%m" >>linux-hist-3.txt
+  477  echo Kiss János >linux-hist-3.txt
+  478  date "+DATE: %m/%d/%y >linux-hist-3.txt
+"
+  479  cat linux-hist-3.txt 
+  480  date "+DATE: %m/%d/%y" >linux-hist-3.txt
+  481  cat linux-hist-3.txt 
+  482  date "+datum: %m/%d/%y" >linux-hist-3.txt
+  483  cat linux-hist-3.txt 
+  484  date "+pontos ido: %H/%m" >>linux-hist-3.txt
+  485  echo Kiss János >>linux-hist-3.txt
+  486  cat linux-hist-3.txt 
+  487  history >>linux-hist-3.txt 

@@ -1,0 +1,84 @@
+#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1
+
+explain plan for select count(hazon) from branyi.hajos 
+WHERE
+    hazon NOT IN ( SELECT hazon
+   FROM branyi.csonak natural join branyi.berles where csonak.szin ='piros') ;
+
+select * from table(dbms_xplan.display);
+
+
+----------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT      |          |     1 |    16 |     9   (0)| 00:00:01 |
+|   1 |  SORT AGGREGATE       |          |     1 |    16 |            |          |
+|*  2 |   HASH JOIN ANTI NA   |          |     3 |    48 |     9   (0)| 00:00:01 |
+|   3 |    TABLE ACCESS FULL  | HAJOS    |    11 |    33 |     3   (0)| 00:00:01 |
+|   4 |    VIEW               | VW_NSO_1 |     8 |   104 |     6   (0)| 00:00:01 |
+|*  5 |     HASH JOIN         |          |     8 |   176 |     6   (0)| 00:00:01 |
+|*  6 |      TABLE ACCESS FULL| CSONAK   |     2 |    30 |     3   (0)| 00:00:01 |
+|   7 |      TABLE ACCESS FULL| BERLES   |    37 |   259 |     3   (0)| 00:00:01 |
+----------------------------------------------------------------------------------
+ 
+Predicate Information (identified by operation id):
+---------------------------------------------------
+ 
+   2 - access("HAZON"="HAZON")
+   5 - access("CSONAK"."CSAZON"="BERLES"."CSAZON")
+   6 - filter("CSONAK"."SZIN"='piros')
+#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2#2
+
+explain plan for 
+select unique  B1.*
+     from 
+branyi.berles B2,  (select unique  DATUM from branyi.csonak natural join  branyi.berles B1 ) B1 
+     where
+B1.DATUM > B2.DATUM;
+
+--------------------------------------------------------------------------------
+| Id  | Operation             | Name   | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT      |        |    28 |   672 |    12  (25)| 00:00:01 |
+|   1 |  SORT UNIQUE NOSORT   |        |    28 |   672 |    12  (25)| 00:00:01 |
+|   2 |   MERGE JOIN SEMI     |        |    34 |   816 |    11  (19)| 00:00:01 |
+|   3 |    SORT JOIN          |        |    37 |   592 |     7  (15)| 00:00:01 |
+|*  4 |     HASH JOIN         |        |    37 |   592 |     6   (0)| 00:00:01 |
+|   5 |      TABLE ACCESS FULL| CSONAK |    10 |    40 |     3   (0)| 00:00:01 |
+|   6 |      TABLE ACCESS FULL| BERLES |    37 |   444 |     3   (0)| 00:00:01 |
+|*  7 |    SORT UNIQUE        |        |    37 |   296 |     4  (25)| 00:00:01 |
+|   8 |     TABLE ACCESS FULL | BERLES |    37 |   296 |     3   (0)| 00:00:01 |
+--------------------------------------------------------------------------------
+ 
+Predicate Information (identified by operation id):
+---------------------------------------------------
+ 
+   4 - access("CSONAK"."CSAZON"="B1"."CSAZON")
+   7 - access(INTERNAL_FUNCTION("B1"."DATUM")>INTERNAL_FUNCTION("B2"."DA
+              TUM"))
+       filter(INTERNAL_FUNCTION("B1"."DATUM")>INTERNAL_FUNCTION("B2"."DA
+              TUM"))
+
+
+#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3#3
+
+
+explain plan for SELECT * from branyi.hajos natural join ( select hazon,count(*) c FROM branyi.berles GROUP BY hazon
+HAVING count(*) >= 4) order by c ;
+
+---------------------------------------------------------------------------------
+| Id  | Operation              | Name   | Rows  | Bytes | Cost (%CPU)| Time     |
+---------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT       |        |     1 |    39 |     8  (25)| 00:00:01 |
+|   1 |  SORT ORDER BY         |        |     1 |    39 |     8  (25)| 00:00:01 |
+|*  2 |   HASH JOIN            |        |     1 |    39 |     7  (15)| 00:00:01 |
+|   3 |    VIEW                |        |     1 |    16 |     4  (25)| 00:00:01 |
+|*  4 |     FILTER             |        |       |       |            |          |
+|   5 |      HASH GROUP BY     |        |     1 |     3 |     4  (25)| 00:00:01 |
+|   6 |       TABLE ACCESS FULL| BERLES |    37 |   111 |     3   (0)| 00:00:01 |
+|   7 |    TABLE ACCESS FULL   | HAJOS  |    11 |   253 |     3   (0)| 00:00:01 |
+---------------------------------------------------------------------------------
+ 
+Predicate Information (identified by operation id):
+---------------------------------------------------
+ 
+   2 - access("HAJOS"."HAZON"="from$_subquery$_002"."HAZON")
+   4 - filter(COUNT(*)>=4)

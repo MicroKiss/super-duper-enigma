@@ -1,0 +1,153 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+body {
+	font-family:Cambria, 'Hoefler Text', 'Liberation Serif', Times, 'Times New Roman', 'serif';  
+	background-color: #000000;
+	background-image:url('src/bg.jpg');
+    background-size: cover;
+	background-position:0px 0px,bottom;
+	text-align:left;
+}
+
+a:link {color:red;}							
+a:visited {color:#666;}						
+a:hover {text-decoration:underline; color: #fff}		
+
+
+
+img.symbol,#symbol{
+	width:  10%;
+}
+
+	img.image {
+	width:  100%;
+}
+
+
+.kipozicional, #navkipozicional a {position:absolute; left:-9999px;}
+.kipozicional a:focus,#navkipozicional:focus {position:static; background:white}
+
+
+main,#main_content{
+	min-width:400px;		
+	max-width:95%;		
+	margin-left:auto;		
+	margin-right:auto;
+	margin-top:30px;		
+	color:red;
+	padding:10px; 
+	 font-size: 1.25em;
+	}
+
+.content,#main_content {
+	margin-left: auto;
+    margin-right: auto;
+	
+	
+}
+
+/*Menü részleg*/
+.navbar,#navbar {
+	color:red;
+    overflow: hidden;
+    font-family: "Century Gothic", Helvetica, sans-serif;
+
+}
+
+
+.navbar a:hover, .dropdown:hover .dropbtn,#navbar a:hover {
+	color: red;
+    background-color: gray;
+}
+
+.navbar *,#navbar *{
+	font-variant:small-caps;
+    font-size: 1.2em;
+    color: red;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#title{
+	 overflow: hidden;
+	font-variant:small-caps;
+    font-size: 1.8em;
+    color: red;
+    text-decoration: none;
+	margin-left:40px;
+	margin-bottom:40px;
+}
+#title img{
+		 position: absolute;
+		 top: 50px;
+	
+}
+
+tr td:first-child { width: 55%; }
+
+ table.center,table#center {
+    margin-left:auto; 
+    margin-right:auto;
+	width: 80%;
+	table-layout: fixed;
+  }
+
+  
+ table.complex {
+	 width: 80%;
+    margin-left:auto; 
+    margin-right:auto;
+	 
+ }
+  
+table.complex *{
+	text-align: left;
+	border: solid gray;
+}
+
+table.complex th{ 
+text-align:center;
+ }
+tr td:first-child { width: 10%; }
+
+  
+tr td{
+	margin-left:0px;		
+	margin-right:0px;
+	margin-top:0px;	
+	margin-bottom:0px;	
+	padding:0px; 	}
+	
+table.complex caption{
+	text-align:center;
+		border: none;
+}
+
+footer,#footer {
+	color:red;
+	
+}
+
+.active,#active {
+	background-color:gray;
+}
+
+h1,h2 {
+	
+	color:red;
+	
+}
+article,#article{
+	color :red;
+	text-align:left;
+	margin: 10%;
+	
+}
+
+#left-align {
+	
+		 font-size: 1.25em;
+}	
+
+

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="hu">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="vxkmfl.css" rel="stylesheet" type="text/css" />
+	<title>Kérdőív - A zárfeltörés művészete</title>
+	
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div id="navkipozicional">
+		<a href="#tartalom">Ugrás a tartalomra</a>
+	</div>
+	<header>
+		<div class="navbar">
+			<a href="index.html">Kezdőlap</a>
+			<a href="how_does_it_work.html">Hogyan működik egy zár?</a>
+			<a href="how_to_lockpick.html">Hogyan lehet feltörni?</a>
+			<a class="active"  href="question.html">Kérdőív</a>
+
+
+
+		</div>
+		<div id="title" >
+			<p>
+							<b>A zárfeltörés művészete</b>
+				<img class="symbol" src="src/symbol.png" alt="zár szimbólum" >
+
+			</p>
+		</div>
+	</header>
+					  <a id="tartalom" class="kipozicional">Navigációs menü átugrása</a>
+	<main class="content">
+						 
+	<div class="container-fluid">
+<div class="row">
+	<div class="col-sm-6">
+				<form action="mailto:dinnyetok@gmail.com?subject=Lockpicking%20Page" method="post" enctype="text/plain">
+					<fieldset>
+
+						<legend>Kérdőív</legend>
+							<br><label for="name">Teljes név:</label>
+							<br><input maxlength="30" type="text" name="name" id="name"    size="30" placeholder="Mézga Géza" required>
+							<br><label for="email">e-mail cím:</label>
+							<br><input  maxlength="30" type="email" name="email" id="email" size="30" placeholder="ez@egy.email" required>
+						<br>
+						<br>
+							<br><label for="comment">megjegyzés az oldalhoz:</label>
+							<br><textarea  maxlength="256" rows="4" cols="30" id="comment" placeholder="Az oldal azért jó mert..." required></textarea>
+							<p>Kérlek értékeld az oldalt 0-4 ig.</p>
+								<input type="radio" name="rating" value="0" required> 0
+								<input type="radio" name="rating" value="1"> 1
+								<input type="radio" name="rating" value="2"> 2
+								<input type="radio" name="rating" value="3"> 3
+								<input type="radio" name="rating" value="4" checked> 4
+							<br>
+							<br>
+							<label for="recommend">Ajánlanád-e az oldalt másoknak?</label>
+							<br><input type="checkbox" name="recommend" id="recommend" value="Yes" required>Még szép, hogy igen
+						<br><input type="submit" value ="Küldés" >
+							<input type="reset" value="Törlés">
+					</fieldset>
+				</form>
+		</div>
+
+	<div class="col-sm-6">
+						<figure><img class="image"  src="src/end.jpg" alt="Zárfeltörő készlet"></figure>
+</div>
+		
+
+	 </div>
+	 </div>
+	</main>
+	
+	
+	<footer>
+		<p>A Zárfeltörés | Kiss János | VXKMFL</p>
+	</footer>
+</body>
+</html>

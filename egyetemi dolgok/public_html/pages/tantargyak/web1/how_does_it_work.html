@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="hu">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="vxkmfl.css" rel="stylesheet" type="text/css" />
+	<title>Hogyan - A zárfeltörés művészete</title>
+	
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</head>
+<body>
+	<nav class="kipozicional">
+		<a href="#tartalom">Ugrás a tartalomra</a>
+	</nav>
+	<header>
+		<div class="navbar">
+			<a href="index.html">Kezdőlap</a>
+			<a class="active" href="how_does_it_work.html">Hogyan működik egy zár?</a>
+			<a href="how_to_lockpick.html">Hogyan lehet feltörni?</a>
+			<a href="question.html">Kérdőív</a>
+
+
+
+		</div>
+		<div id="title" >
+			<p>
+							<b>A zárfeltörés művészete</b>
+				<img class="symbol" src="src/symbol.png" alt="zár szimbólum" >
+
+			</p>
+		</div>
+	</header>
+					  <a id="tartalom" class="kipozicional">Navigációs menü átugrása</a>
+	<main class="content">
+
+	<div class="container-fluid">
+<div class="row">
+	<div class="col-sm-6">
+				<article>
+				<h1> Hogyan működik ? </h1>
+				 <br>
+				Ha meg akarsz tanulni lockpickelni, tudnod
+				kell, hogy milyen belülről, hogyan is működik egy zár.
+				Egy jó videó többet mond, mint ezer szó tehát tekintsük meg az alábbi animációt.
+				<br>
+				<br>
+				<h2> Módszer</h2>
+				Egy a zárba való
+				kulcs az összes stiftet egyszerre a megfelelő mélységig
+				nyomja.
+				<br>
+				<aside>
+					Az alábbi képek és videók megmutatját a zárak
+					mikéntjét.
+				</aside>
+				</article>
+	</div>
+	<div class="col-sm-6">
+				<a href="src/inside_1.jpg" target="_blank"><figure><img src="src/inside_1s.jpg" alt="Zár belülről 1"></figure>	</a>	
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-6">
+
+<div style="text-align:center"> 
+<p>Videó <a href="https://www.youtube.com/watch?v=Wtl2hmHZCLw" target="_blank">egy zár belsejéről.</a></p>
+<p> Videó <a href="video.html"> leírása</a></p>
+  <video id="video1" width="512" poster="src/how_work.jpg">
+    <source src="src/how_work.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+    <br><br>
+    <button onclick="playPause()">Indít/Szünet</button> 
+  <button onclick="makeBig()">Nagy</button>
+  <button onclick="makeNormal()">Közepes</button>
+  <button onclick="makeSmall()">Kicsi</button>
+
+
+</div> 
+
+<script> 
+var myVideo = document.getElementById("video1"); 
+
+function playPause() { 
+    if (myVideo.paused) 
+        myVideo.play(); 
+    else 
+        myVideo.pause(); 
+} 
+
+function makeBig() { 
+    myVideo.width = 512; 
+} 
+
+function makeSmall() { 
+    myVideo.width = 240; 
+} 
+
+function makeNormal() { 
+    myVideo.width = 348; 
+} 
+</script> 
+
+	</div>
+	<div class="col-sm-6">
+				<a href="src/inside_2.jpg" target="_blank"><figure><img src="src/inside_2s.jpg" alt="Zár belülről 2"></figure>	</a>
+	</div>
+</div>
+</div>
+		
+	</main>
+	
+	<footer>
+		<p>A Zárfeltörés | Kiss János | VXKMFL</p>
+	</footer>
+	
+</body>
+</html>

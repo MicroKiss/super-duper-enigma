@@ -1,0 +1,18 @@
+input:valid {
+    box-shadow: 0 0 5px 1px green;
+}
+input:invalid {
+    box-shadow: 0 0 5px 1px red;
+}
+input:focus {
+    box-shadow: none;
+}
+
+input:valid + span:after {
+    content: " ✔";
+    color: green;
+}
+input:invalid + span:after {
+    content: " ❌";
+    color: red;
+}
