@@ -11,7 +11,7 @@ namespace CEH
         ERROR        = 2
     };
 
-    enum class Error {
+    enum class Exception {
         NOPERMISSIONTOWRITE = 0,
         NOPERMISSIONTOREAD  = 1,
         BADPARAMS           = 2,
@@ -20,7 +20,7 @@ namespace CEH
         
     };
 
-    std::string GetErrorMessage     (const Error& e);
+    std::string GetErrorMessage     (const Exception& e);
 
     class CommonErrorHandler
     {
