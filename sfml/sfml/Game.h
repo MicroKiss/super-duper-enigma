@@ -6,11 +6,8 @@
 #include "GameLogic.h"
 
 
-
-
 class Game
 {
-
 public:
 	Game ();
 	virtual ~Game ();
@@ -18,25 +15,23 @@ public:
 	void Draw ();
 	void Exit ();
 	bool IsAlive () const { return alive; }
+
 private:
 	void Init ();
 	void HandleEvents ();
 	void HandleJoystickButtonPressed (unsigned int buttonCode, const Controls& controls);
 	void HandleJoystickButtonReleased (unsigned int buttonCode, const Controls& controls);
 	void HandleJoystickMove (sf::Joystick::Axis axis, float position, const Controls& controls);
-	void DrawPauseMenu();
+	void DrawPauseMenu ();
 
-
-private:
 	sf::Clock clock;
 	float deltaTime;
 	void KeyDown (int button);
 	bool alive;
-	sf::RenderWindow *window;
+	std::shared_ptr<sf::RenderWindow> window;
 	std::set<sf::Keyboard::Key> inputs;
-	std::list<Entity *> entities;
+	std::list<Entity*> entities;
 
 	GameLogic gameLogic;
 	bool paused = false;
-
 };

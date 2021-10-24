@@ -3,7 +3,7 @@
 
 
 SpriteSheet::SpriteSheet (
-	const char *filePath,
+	const char* filePath,
 	unsigned short width,
 	unsigned short height,
 	unsigned short numberOfSprites,
@@ -23,10 +23,11 @@ SpriteSheet::SpriteSheet (
 }
 
 
-void SpriteHandler::Draw (sf::RenderWindow *const window)
+void SpriteHandler::Draw (std::shared_ptr<sf::RenderWindow> window)
 {
 	window->draw (currentSprite);
 }
+
 
 void SpriteHandler::Update (float deltaTime)
 {
@@ -37,13 +38,13 @@ void SpriteHandler::Update (float deltaTime)
 
 	timeSinceLastUpdate += deltaTime;
 
-	if (timeSinceLastUpdate > currentSpriteSheet->updateInterval)
-	{
+	if (timeSinceLastUpdate > currentSpriteSheet->updateInterval) {
 		timeSinceLastUpdate = 0;
 		currentSpriteIndex = (currentSpriteIndex + 1) % currentSpriteSheet->numberOfSprites;
 		currentSprite.setTextureRect (sf::IntRect (currentSpriteIndex * currentSpriteSheet->width, 0, currentSpriteSheet->width, currentSpriteSheet->height));
 	}
 }
+
 
 void SpriteHandler::SetSprite (std::string name)
 {
@@ -59,14 +60,16 @@ void SpriteHandler::SetSprite (std::string name)
 	currentSpriteSheetName = name;
 }
 
+
 std::string SpriteHandler::GetSpriteName () const
 {
 	return currentSpriteSheetName;
 }
 
+
 void SpriteHandler::LoadSpriteSheet (
 	std::string name,
-	char const *const filePath,
+	char const* const filePath,
 	unsigned short width,
 	unsigned short height,
 	unsigned short numberOfSprites,

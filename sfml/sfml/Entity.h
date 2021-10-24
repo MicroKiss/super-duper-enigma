@@ -17,8 +17,8 @@ enum class EntityType
 
 enum class Shape
 {
-	Rectangle	= 0,
-	Circle		= 1,
+	Rectangle = 0,
+	Circle = 1,
 };
 
 
@@ -41,7 +41,7 @@ public:
 	sf::Clock clock;
 	sf::Time duration;
 	virtual ~AttributeModifier () {};
-	virtual void apply (Attributes &attributes) = 0;
+	virtual void apply (Attributes& attributes) = 0;
 	bool Expired () { return clock.getElapsedTime () > duration; }
 };
 
@@ -49,11 +49,12 @@ public:
 class DoubleSpeedBuff : public AttributeModifier
 {
 public:
-	DoubleSpeedBuff () {
+	DoubleSpeedBuff ()
+	{
 		duration = sf::seconds (5);
 	};
 
-	virtual void apply (Attributes &attributes) override
+	virtual void apply (Attributes& attributes) override
 	{
 		attributes.movSpeed *= 2;
 		attributes.attackSpeed *= 10;
@@ -66,10 +67,10 @@ class Entity
 {
 public:
 	Entity ();
-	Entity (const Entity &) = delete;
-	Entity &operator=(const Entity &) = delete;
+	Entity (const Entity&) = delete;
+	Entity& operator=(const Entity&) = delete;
 	virtual ~Entity () {}
-	virtual void Draw (sf::RenderWindow *const window, float deltaTime);
+	virtual void Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime);
 	virtual void Move (float offsetX, float offsetY);
 	virtual int GetX ()const;
 	virtual int GetY ()const;
@@ -77,13 +78,13 @@ public:
 	virtual int GetTop ()const;
 	virtual int GetWidth ()const;
 	virtual int GetHeight ()const;
-	virtual bool NeedsToBeIndexUpdated() const;
+	virtual bool NeedsToBeIndexUpdated () const;
 	virtual sf::Vector2f GetCenter () const;
 	virtual sf::IntRect GetBoundingBox (int offsetX = 0, int offsetY = 0, int offsetW = 0, int offsetH = 0) const;
 	size_t GetID ()const { return id; }
-	void Moved( bool b = true);
+	void Moved (bool b = true);
 public:
-	SpriteHandler *spriteHandler;
+	SpriteHandler* spriteHandler;
 	EntityType type = EntityType::Undefined;
 	Shape shape = Shape::Rectangle;
 private:
@@ -121,7 +122,7 @@ public:
 	float hsp = 0;
 	Attributes attributes;
 	Controls controls;
-	std::list<AttributeModifier *> buffs;
+	std::list<AttributeModifier*> buffs;
 private:
 };
 
@@ -135,7 +136,7 @@ public:
 	~Bullet () {};
 	virtual void Move (float offsetX, float offsetY) override;
 	void Init (sf::Vector2f pos, short direction);
-	virtual void Draw (sf::RenderWindow *const window, float deltaTime) override;
+	virtual void Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime) override;
 
 	short direction;
 	sf::Vector2f startPos;
@@ -143,10 +144,10 @@ public:
 	int speed = 700;
 
 
-	virtual int GetX	() const override;
-	virtual int GetY	() const override;
+	virtual int GetX () const override;
+	virtual int GetY () const override;
 	virtual int GetLeft () const override;
-	virtual int GetTop	() const override;
+	virtual int GetTop () const override;
 };
 
 
@@ -157,15 +158,15 @@ public:
 	virtual ~Wall () {}
 	Wall (sf::Vector2f pos);
 	Wall (float x, float y);
-	virtual void Draw (sf::RenderWindow *const window, float deltaTime) override;
+	virtual void Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime) override;
 	void Init (sf::Vector2f pos);
 	sf::Vector2f pos;
 
 
-	virtual int GetX	()	const override;
-	virtual int GetY	()	const override;
+	virtual int GetX ()	const override;
+	virtual int GetY ()	const override;
 	virtual int GetLeft ()	const override;
-	virtual int GetTop	()	const override;
+	virtual int GetTop ()	const override;
 };
 
 
@@ -176,7 +177,7 @@ public:
 	virtual ~Enemy () {}
 	Enemy (sf::Vector2f pos);
 	Enemy (float x, float y);
-	virtual void Draw (sf::RenderWindow *const window, float deltaTime) override;
+	virtual void Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime) override;
 	virtual void Move (float offsetX, float offsetY) override;
 	void Init (sf::Vector2f pos);
 	sf::Vector2f pos;

@@ -10,12 +10,12 @@ inline int Sign (int x)
 
 inline float Distance (float x1, float y1, float x2, float y2)
 {
-	return std::sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+	return std::sqrt ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 }
 
 inline bool CircleIntersect (float x1, float y1, float r1, float x2, float y2, float r2)
 {
-	return Distance (x1,y1,x2,y2) < std::sqrt((r1 + r2) * (r1 + r2));
+	return Distance (x1, y1, x2, y2) < std::sqrt ((r1 + r2) * (r1 + r2));
 }
 
 
@@ -31,7 +31,7 @@ inline bool RectangleIntersect (float x1, float y1, float w1, float h1, float x2
 }
 
 
-inline bool Intersect (Entity const &first, Entity const &second)
+inline bool Intersect (Entity const& first, Entity const& second)
 {
 	return CircleIntersect (first.GetCenter (), 100, second.GetCenter (), 100);
 }

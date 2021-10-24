@@ -5,7 +5,6 @@
 SpacialIndex::SpacialIndex (int gridSize /*= 64*/)
 {
 	this->gridSize = gridSize;
-
 }
 
 
@@ -14,43 +13,44 @@ SpacialIndex::~SpacialIndex ()
 }
 
 
-std::list<Entity *> *SpacialIndex::operator()(std::pair<int, int> coords)
+std::list<Entity*>* SpacialIndex::operator()(std::pair<int, int> coords)
 {
 	return &index.at (coords);
 }
 
 
-std::list<Entity *> *SpacialIndex::operator()(int n, int m)
+std::list<Entity*>* SpacialIndex::operator()(int n, int m)
 {
 	return this->operator()(std::pair<int, int> (n, m));
 }
 
 
-void SpacialIndex::Clear ()
+void SpacialIndex::Clear (const std::list<Entity*>& entitiesToRemove)
 {
-	index.clear();
-	for (auto& pair : index) 
-		std::erase_if(pair.second, [this](Entity* e) {return DoEntityNeedsToBeUpdated(e); });
-	
-	
+	auto needsToBeRemoved = [=] (Entity* e) {
+		return std::find (entitiesToRemove.begin (), entitiesToRemove.end (), e) != std::end (entitiesToRemove) ||
+			DoEntityNeedsToBeUpdated (e); };
+
+	for (auto& pair : index) {
+		std::erase_if (pair.second, needsToBeRemoved);
+	}
 }
 
 
-bool SpacialIndex::DoEntityNeedsToBeUpdated(Entity* ent) 
+bool SpacialIndex::DoEntityNeedsToBeUpdated (Entity* ent)
 {
-	return true;
-	if (ent->NeedsToBeIndexUpdated()) {
-		ent->Moved(false);
+	if (ent->NeedsToBeIndexUpdated ()) {
+		ent->Moved (false);
 		return true;
 	}
 	return false;
 }
 
 
-void SpacialIndex::CreateIndex (std::list<Entity *> *entities)
+void SpacialIndex::CreateIndex (std::list<Entity*>* entities)
 {
-	for (auto &entity : *entities) {
-		if (!DoEntityNeedsToBeUpdated(entity))
+	for (auto& entity : *entities) {
+		if (!DoEntityNeedsToBeUpdated (entity))
 			continue;
 		//entitás szélének meghatározása (cella szélek)
 		//	return sf::IntRect (GetX () + offsetX, GetY () + offsetY, GetWidth () + offsetW, GetHeight () + offsetH);
@@ -64,7 +64,7 @@ void SpacialIndex::CreateIndex (std::list<Entity *> *entities)
 
 		for (int x = cellLeft; x <= cellRight; ++x) {
 			for (int y = cellTop; y <= cellBottom; ++y) {
-				auto &cellList = index[std::pair<int, int> (x, y)];
+				auto& cellList = index[std::pair<int, int> (x, y)];
 				cellList.push_back (entity);
 			}
 		}
@@ -72,10 +72,10 @@ void SpacialIndex::CreateIndex (std::list<Entity *> *entities)
 }
 
 
-Entity* SpacialIndex::CheckCollision (Entity *ent, EntityType typeId)
+Entity* SpacialIndex::CheckCollision (Entity* ent, EntityType typeId)
 {
 	auto nearObjects = Query (ent);
-	for (auto &object : nearObjects) {
+	for (auto& object : nearObjects) {
 		if (object != ent && object->type == typeId)
 			return object;
 	}
@@ -83,10 +83,10 @@ Entity* SpacialIndex::CheckCollision (Entity *ent, EntityType typeId)
 }
 
 
-Entity* SpacialIndex::CheckCollision (const sf::IntRect &rect, EntityType typeId)
+Entity* SpacialIndex::CheckCollision (const sf::IntRect& rect, EntityType typeId)
 {
 	auto nearObjects = Query (rect);
-	for (auto &object : nearObjects) {
+	for (auto& object : nearObjects) {
 		if (object->type == typeId)
 			return object;
 	}
@@ -94,13 +94,13 @@ Entity* SpacialIndex::CheckCollision (const sf::IntRect &rect, EntityType typeId
 }
 
 
-Entity *SpacialIndex::CheckCollision (float x, float y, float w, float h, EntityType typeId)
+Entity* SpacialIndex::CheckCollision (float x, float y, float w, float h, EntityType typeId)
 {
 	return CheckCollision (sf::IntRect (x, y, w, h), typeId);
 }
 
 
-std::list<Entity *> SpacialIndex::Query (const sf::IntRect &rect)
+std::list<Entity*> SpacialIndex::Query (const sf::IntRect& rect)
 {
 	int left = rect.left;
 	int top = rect.top;
@@ -108,16 +108,16 @@ std::list<Entity *> SpacialIndex::Query (const sf::IntRect &rect)
 	int cellTop = top / gridSize;
 	int cellRight = (left + rect.width) / gridSize;
 	int cellBottom = (top + rect.height) / gridSize;
-	std::list<Entity *> result;
+	std::list<Entity*> result;
 
 	for (int x = cellLeft; x <= cellRight; ++x) {
 		for (int y = cellTop; y <= cellBottom; ++y) {
 			if (index.contains (std::pair<int, int> (x, y))) {
 				auto cellData = index[std::pair<int, int> (x, y)];
-				for (auto &e : cellData) {
-					auto asd = e->spriteHandler->currentSprite.getGlobalBounds();
-					if (RectangleIntersect(rect.left,rect.top,rect.width,rect.height, asd.left, asd.top, asd.width, asd.height))
-						if( std::find(result.begin(), result.end(), e) == result.end())
+				for (auto& e : cellData) {
+					auto asd = e->spriteHandler->currentSprite.getGlobalBounds ();
+					if (RectangleIntersect (rect.left, rect.top, rect.width, rect.height, asd.left, asd.top, asd.width, asd.height))
+						if (std::find (result.begin (), result.end (), e) == result.end ())
 							result.push_back (e);
 					//if (/*e != ent &&*/ std::find (result.begin (), result.end (), e) == result.end ())
 				}
@@ -128,7 +128,7 @@ std::list<Entity *> SpacialIndex::Query (const sf::IntRect &rect)
 }
 
 
-std::list<Entity *> SpacialIndex::Query (Entity *ent) 
+std::list<Entity*> SpacialIndex::Query (Entity* ent)
 {
 	int left = ent->GetX ();
 	int top = ent->GetY ();
@@ -136,13 +136,13 @@ std::list<Entity *> SpacialIndex::Query (Entity *ent)
 	int cellTop = top / gridSize;
 	int cellRight = (left + ent->GetWidth ()) / gridSize;
 	int cellBottom = (top + ent->GetHeight ()) / gridSize;
-	std::list<Entity *> result;
+	std::list<Entity*> result;
 
 	for (int x = cellLeft; x <= cellRight; ++x) {
 		for (int y = cellTop; y <= cellBottom; ++y) {
 			if (index.contains (std::pair<int, int> (x, y))) {
 				auto cellData = index[std::pair<int, int> (x, y)];
-				for (auto &e : cellData) {
+				for (auto& e : cellData) {
 					if (DoEntitiesIntersect (ent, e) && std::find (result.begin (), result.end (), e) == result.end ())
 						result.push_back (e);
 				}
@@ -153,7 +153,7 @@ std::list<Entity *> SpacialIndex::Query (Entity *ent)
 }
 
 
-bool SpacialIndex::DoEntitiesIntersect (Entity *ent1, Entity *ent2)
+bool SpacialIndex::DoEntitiesIntersect (Entity* ent1, Entity* ent2)
 {
 	if (ent1 == ent2)
 		return true;
@@ -161,7 +161,7 @@ bool SpacialIndex::DoEntitiesIntersect (Entity *ent1, Entity *ent2)
 	if (ent1->shape == ent2->shape) {
 		if (ent1->shape == Shape::Rectangle)
 			return RectangleIntersect (ent1->GetX (), ent1->GetY (), ent1->GetWidth (), ent1->GetHeight (), ent2->GetX (), ent2->GetY (), ent2->GetWidth (), ent2->GetHeight ());
-			//return ent1->spriteHandler->currentSprite.getGlobalBounds ().intersects (ent2->spriteHandler->currentSprite.getGlobalBounds ());
+		//return ent1->spriteHandler->currentSprite.getGlobalBounds ().intersects (ent2->spriteHandler->currentSprite.getGlobalBounds ());
 	}
 	return false;
 }

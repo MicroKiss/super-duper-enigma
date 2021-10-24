@@ -1,14 +1,14 @@
 #include "GameLogic.h"
 #include <memory>
 
-Entity *GameLogic::AddEntity (Entity *ent)
+Entity* GameLogic::AddEntity (Entity* ent)
 {
 	if (ent->type == EntityType::Player) {
 		assert (player2 == nullptr);
-	if (player1 == nullptr)
-		player1 = std::shared_ptr<Player> (static_cast<Player *> (ent));
-	else
-		player2 = std::shared_ptr<Player> (static_cast<Player *> (ent));
+		if (player1 == nullptr)
+			player1 = std::shared_ptr<Player> (static_cast<Player*> (ent));
+		else
+			player2 = std::shared_ptr<Player> (static_cast<Player*> (ent));
 	}
 
 	entities->push_back (ent);
@@ -16,7 +16,7 @@ Entity *GameLogic::AddEntity (Entity *ent)
 }
 
 
-void GameLogic::RemoveEntity (Entity *ent)
+void GameLogic::RemoveEntity (Entity* ent)
 {
 	entities->remove (ent);
 }
@@ -24,9 +24,9 @@ void GameLogic::RemoveEntity (Entity *ent)
 
 void GameLogic::RemoveEntity (size_t id)
 {
-	entities->remove_if ([id](Entity *ent) {
+	entities->remove_if ([id] (Entity* ent) {
 		return ent->GetID () == id;
-		});
+	});
 }
 
 
@@ -36,13 +36,13 @@ bool GameLogic::IsPressed (int button)
 }
 
 
-void GameLogic::SetInputs (std::set<sf::Keyboard::Key> *inputsPointer)
+void GameLogic::SetInputs (std::set<sf::Keyboard::Key>* inputsPointer)
 {
 	inputs = std::shared_ptr<std::set<sf::Keyboard::Key>> (inputsPointer);
 }
 
 
-void GameLogic::SetEntities (std::list<Entity *> *entitiesPointer)
+void GameLogic::SetEntities (std::list<Entity*>* entitiesPointer)
 {
 	entities = entitiesPointer;
 }
@@ -50,7 +50,7 @@ void GameLogic::SetEntities (std::list<Entity *> *entitiesPointer)
 
 GameLogic::~GameLogic ()
 {
-	if(entities)
+	if (entities)
 		for (auto& i : *entities)
 			delete i;
 }
@@ -62,18 +62,17 @@ void GameLogic::Update (float deltaTime)
 }
 
 
-void GameLogic::UpdatePlayer (Player *player, float deltaTime)
+void GameLogic::UpdatePlayer (Player* player, float deltaTime)
 {
 	const Attributes originalAttributes = player->attributes;
 	for (auto it = player->buffs.begin (); it != player->buffs.end ();) {
 		(*it)->apply (player->attributes);
 		if ((*it)->Expired ()) {
-			AttributeModifier *toRemove = *it;
+			AttributeModifier* toRemove = *it;
 			++it;
 			player->buffs.remove (toRemove);
 			delete toRemove;
-		}
-		else
+		} else
 			++it;
 	}
 
@@ -89,7 +88,7 @@ void GameLogic::UpdatePlayer (Player *player, float deltaTime)
 	}
 
 	if (IsPressed (player->controls.powerMove) && player->buffs.empty ()) {
-		AttributeModifier *newbuff = new DoubleSpeedBuff;
+		AttributeModifier* newbuff = new DoubleSpeedBuff;
 		player->buffs.push_back (newbuff);
 	}
 
@@ -114,7 +113,7 @@ void GameLogic::UpdatePlayer (Player *player, float deltaTime)
 		//vsp = 0;
 		//vsp = (IsPressed (player->controls.moveUp) ) * -player->attributes.jumpSpeed;
 	}
-	
+
 		*/
 
 	if (spacialIndex.CheckCollision (player->GetBoundingBox (deltaTime * hsp), EntityType::Wall)) {
@@ -138,8 +137,7 @@ void GameLogic::UpdatePlayer (Player *player, float deltaTime)
 			player->spriteHandler->SetSprite ("jump_l");
 		else
 			player->spriteHandler->SetSprite ("jump_r");
-	}
-	else if (vsp == 0) {
+	} else if (vsp == 0) {
 		if (hsp > 0)
 			player->spriteHandler->SetSprite ("run_r");
 		else
@@ -150,16 +148,15 @@ void GameLogic::UpdatePlayer (Player *player, float deltaTime)
 }
 
 
-void GameLogic::UpdateBullet (Bullet *bullet, float deltaTime)
+void GameLogic::UpdateBullet (Bullet* bullet, float deltaTime)
 {
 	bullet->Move (deltaTime * bullet->direction * bullet->speed, 0);
-
 
 	bool tooFar = (bullet->startPos.x - bullet->pos.x) *
 		(bullet->startPos.x - bullet->pos.x) +
 		(bullet->startPos.y - bullet->pos.y) *
 		(bullet->startPos.y - bullet->pos.y) > 200000;
-	Entity *hitWall = spacialIndex.CheckCollision (bullet->GetX (), bullet->GetY (), bullet->GetWidth (), bullet->GetHeight (), EntityType::Wall);
+	Entity* hitWall = spacialIndex.CheckCollision (bullet->GetX (), bullet->GetY (), bullet->GetWidth (), bullet->GetHeight (), EntityType::Wall);
 
 
 	if (tooFar || hitWall != nullptr) {
@@ -167,20 +164,18 @@ void GameLogic::UpdateBullet (Bullet *bullet, float deltaTime)
 		return;
 	}
 
-	Entity *hitEnemy = spacialIndex.CheckCollision (bullet->GetX (), bullet->GetY (), bullet->GetWidth (), bullet->GetHeight (), EntityType::Enemy);
+	Entity* hitEnemy = spacialIndex.CheckCollision (bullet->GetX (), bullet->GetY (), bullet->GetWidth (), bullet->GetHeight (), EntityType::Enemy);
 
-	if (hitEnemy)
-	{
-		static_cast<Enemy *> (hitEnemy)->attributes.health -= 10;
+	if (hitEnemy) {
+		static_cast<Enemy*> (hitEnemy)->attributes.health -= 10;
 		entitiesToRemove.push_back (bullet);
 	}
 }
 
 
-void GameLogic::UpdateEnemy (Enemy *enemy, float deltaTime)
+void GameLogic::UpdateEnemy (Enemy* enemy, float deltaTime)
 {
-	if (Distance (player1->GetCenter ().x, player1->GetCenter ().y, enemy->GetCenter ().x, enemy->GetCenter ().y) < 200)
-	{
+	if (Distance (player1->GetCenter ().x, player1->GetCenter ().y, enemy->GetCenter ().x, enemy->GetCenter ().y) < 200) {
 		enemy->Move (Sign (player1->GetCenter ().x - enemy->GetCenter ().x), 0);
 	}
 
@@ -189,36 +184,32 @@ void GameLogic::UpdateEnemy (Enemy *enemy, float deltaTime)
 }
 
 
-void GameLogic::UpdateEntity (Entity *e, float deltaTime)
+void GameLogic::UpdateEntity (Entity* e, float deltaTime)
 {
 	switch (e->type) {
-	case EntityType::Player:
-		UpdatePlayer (static_cast<Player *> (e), deltaTime);
-		break;
-	case EntityType::Bullet:
-		UpdateBullet (static_cast<Bullet *> (e), deltaTime);
-		break;
-	case EntityType::Enemy:
-		UpdateEnemy (static_cast<Enemy *> (e), deltaTime);
-		break;
-
-	default:
-		break;
+		case EntityType::Player:
+			UpdatePlayer (static_cast<Player*> (e), deltaTime);
+			break;
+		case EntityType::Bullet:
+			UpdateBullet (static_cast<Bullet*> (e), deltaTime);
+			break;
+		case EntityType::Enemy:
+			UpdateEnemy (static_cast<Enemy*> (e), deltaTime);
+			break;
+		default:
+			break;
 	}
 }
 
 
 void GameLogic::UpdateEntities (float deltaTime)
 {
-	for (auto it = entitiesToRemove.begin (); it != entitiesToRemove.end ();) {
-		Entity *toDelete = *it;
-		++it;
-		entitiesToRemove.remove (toDelete);
-		RemoveEntity (toDelete);
-		delete toDelete;
-	}
-	spacialIndex.Clear ();
+	for (auto& i : entitiesToRemove)
+		RemoveEntity (i);
+
+	spacialIndex.Clear (entitiesToRemove);
+	entitiesToRemove.clear ();
 	spacialIndex.CreateIndex (entities);
-	for (auto &e : *entities)
+	for (auto& e : *entities)
 		UpdateEntity (e, deltaTime);
 }

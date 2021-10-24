@@ -1,22 +1,26 @@
 #include "Entity.h"
 
-Entity::Entity () {
+Entity::Entity ()
+{
 	static size_t entitycounter = 0;
 	id = entitycounter++;
 	spriteHandler = nullptr;
 }
 
 
-void Entity::Draw (sf::RenderWindow *const window, float deltaTime) {
+void Entity::Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime)
+{
 	spriteHandler->Draw (window);
 	spriteHandler->Update (deltaTime);
 }
 
+
 void Entity::Move (float offsetX, float offsetY)
 {
 	spriteHandler->currentSprite.move (offsetX, offsetY);
-	Moved();
+	Moved ();
 }
+
 
 int Entity::GetX () const
 {
@@ -24,35 +28,42 @@ int Entity::GetX () const
 
 }
 
+
 int Entity::GetY () const
 {
 	return int (spriteHandler->currentSprite.getPosition ().y);
 }
+
 
 int Entity::GetLeft () const
 {
 	return GetX ();
 }
 
+
 int Entity::GetTop () const
 {
 	return GetY ();
 }
+
 
 int Entity::GetWidth () const
 {
 	return spriteHandler->currentSpriteSheet->width;
 }
 
+
 int Entity::GetHeight () const
 {
 	return spriteHandler->currentSpriteSheet->height;
 }
 
-bool Entity::NeedsToBeIndexUpdated() const
+
+bool Entity::NeedsToBeIndexUpdated () const
 {
 	return moved;
 }
+
 
 sf::Vector2f Entity::GetCenter () const
 {
@@ -60,15 +71,18 @@ sf::Vector2f Entity::GetCenter () const
 		+ sf::Vector2f (float (spriteHandler->currentSpriteSheet->width) / 2.f, float (spriteHandler->currentSpriteSheet->height) / 2.f);
 }
 
+
 sf::IntRect Entity::GetBoundingBox (int offsetX, int offsetY, int offsetW, int offsetH) const
 {
 	return sf::IntRect (GetX () + offsetX, GetY () + offsetY, GetWidth () + offsetW, GetHeight () + offsetH);
 }
 
-void Entity::Moved(bool b)
+
+void Entity::Moved (bool b)
 {
 	moved = b;
 }
+
 
 Player::Player (sf::Vector2f pos)
 {
@@ -90,13 +104,15 @@ Player::Player (sf::Vector2f pos)
 
 int Player::GetX () const
 {
-	return Entity::GetX () +10;
+	return Entity::GetX () + 10;
 }
+
 
 int Player::GetWidth () const
 {
-	return Entity::GetWidth() -20;
+	return Entity::GetWidth () - 20;
 }
+
 
 bool Player::CanAttack ()
 {
@@ -110,20 +126,19 @@ Bullet::Bullet (sf::Vector2f pos, short direction)
 }
 
 
-
 Bullet::Bullet (float x, float y, short direction)
 {
 	Init (sf::Vector2f (x, y), direction);
 }
 
 
-
 void Bullet::Move (float offsetX, float offsetY)
 {
 	pos.x += offsetX;
 	pos.y += offsetY;
-	Moved();
+	Moved ();
 }
+
 
 void Bullet::Init (sf::Vector2f pos, short direction)
 {
@@ -132,31 +147,35 @@ void Bullet::Init (sf::Vector2f pos, short direction)
 	this->direction = direction;
 	type = EntityType::Bullet;
 	spriteHandler = new SpriteHandler;
-	spriteHandler->LoadSpriteSheet("idle", "assets/bullet.png", 10, 10, 1);
-	spriteHandler->SetSprite("idle");
+	spriteHandler->LoadSpriteSheet ("idle", "assets/bullet.png", 10, 10, 1);
+	spriteHandler->SetSprite ("idle");
 }
 
 
-void Bullet::Draw (sf::RenderWindow *const window, float deltaTime)
+void Bullet::Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime)
 {
 	spriteHandler->currentSprite.setPosition (pos);
 	spriteHandler->Draw (window);
 }
+
 
 int Bullet::GetX () const
 {
 	return static_cast<int> (pos.x);
 }
 
+
 int Bullet::GetY () const
 {
 	return static_cast<int> (pos.y);
 }
 
+
 int Bullet::GetLeft () const
 {
 	return GetX ();
 }
+
 
 int Bullet::GetTop () const
 {
@@ -176,7 +195,7 @@ Wall::Wall (float x, float y)
 }
 
 
-void Wall::Draw (sf::RenderWindow *const window, float deltaTime)
+void Wall::Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime)
 {
 	spriteHandler->currentSprite.setPosition (pos);
 	spriteHandler->Draw (window);
@@ -188,78 +207,91 @@ void Wall::Init (sf::Vector2f pos)
 	this->pos = pos;
 	type = EntityType::Wall;
 	spriteHandler = new SpriteHandler;
-	spriteHandler->LoadSpriteSheet("idle", "assets/wall.png", 64, 64, 1);
-	spriteHandler->SetSprite("idle");
+	spriteHandler->LoadSpriteSheet ("idle", "assets/wall.png", 64, 64, 1);
+	spriteHandler->SetSprite ("idle");
 }
+
 
 int Wall::GetX () const
 {
 	return static_cast<int> (pos.x);
 }
 
+
 int Wall::GetY () const
 {
 	return static_cast<int> (pos.y);
 }
+
 
 int Wall::GetLeft () const
 {
 	return GetX ();
 }
 
+
 int Wall::GetTop () const
 {
 	return GetY ();
 }
+
 
 Enemy::Enemy (sf::Vector2f pos)
 {
 	Init (pos);
 }
 
+
 Enemy::Enemy (float x, float y)
 {
 	Init (sf::Vector2f (x, y));
 }
 
-void Enemy::Draw (sf::RenderWindow *const window, float deltaTime)
+
+void Enemy::Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime)
 {
 	spriteHandler->currentSprite.setPosition (pos);
 	spriteHandler->Draw (window);
 }
 
+
 void Enemy::Move (float offsetX, float offsetY)
 {
 	pos.x += offsetX;
 	pos.y += offsetY;
-	Moved();
+	Moved ();
 }
+
 
 void Enemy::Init (sf::Vector2f pos)
 {
 	this->pos = pos;
 	type = EntityType::Enemy;
 	spriteHandler = new SpriteHandler;
-	spriteHandler->LoadSpriteSheet("idle", "assets/enemy.png", 48, 64, 1);
-	spriteHandler->SetSprite("idle");
+	spriteHandler->LoadSpriteSheet ("idle", "assets/enemy.png", 48, 64, 1);
+	spriteHandler->SetSprite ("idle");
 	attributes = {100,100, 200, 400, 10, 1, 0, 0};
 
 }
+
 
 int Enemy::GetX () const
 {
 	return static_cast<int> (pos.x);
 }
 
+
 int Enemy::GetY () const
 {
 	return static_cast<int> (pos.y);
 }
 
+
 int Enemy::GetLeft () const
 {
 	return GetX ();
 }
+
 
 int Enemy::GetTop () const
 {
