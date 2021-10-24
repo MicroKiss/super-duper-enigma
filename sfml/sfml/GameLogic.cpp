@@ -1,5 +1,5 @@
-#include "GameLogic.h"
 #include <memory>
+#include "GameLogic.h"
 
 Entity* GameLogic::AddEntity (Entity* ent)
 {
@@ -65,16 +65,12 @@ void GameLogic::Update (float deltaTime)
 void GameLogic::UpdatePlayer (Player* player, float deltaTime)
 {
 	const Attributes originalAttributes = player->attributes;
-	for (auto it = player->buffs.begin (); it != player->buffs.end ();) {
-		(*it)->apply (player->attributes);
-		if ((*it)->Expired ()) {
-			AttributeModifier* toRemove = *it;
-			++it;
-			player->buffs.remove (toRemove);
-			delete toRemove;
-		} else
-			++it;
+
+	for (std::shared_ptr<AttributeModifier>& buff : player->buffs) {
+		buff->apply (player->attributes);
 	}
+	player->buffs.remove_if ([] (std::shared_ptr<AttributeModifier>& buff) {return buff->Expired (); });
+
 
 	const static float grav = 21;
 	const static float maxFallSpeed = 500;
@@ -88,8 +84,7 @@ void GameLogic::UpdatePlayer (Player* player, float deltaTime)
 	}
 
 	if (IsPressed (player->controls.powerMove) && player->buffs.empty ()) {
-		AttributeModifier* newbuff = new DoubleSpeedBuff;
-		player->buffs.push_back (newbuff);
+		player->buffs.push_back (std::shared_ptr<AttributeModifier>(new DoubleSpeedBuff));
 	}
 
 	short dir = (IsPressed (player->controls.moveDown) - IsPressed (player->controls.moveUp));

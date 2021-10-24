@@ -84,108 +84,10 @@ public:
 	size_t GetID ()const { return id; }
 	void Moved (bool b = true);
 public:
-	SpriteHandler* spriteHandler;
+	std::shared_ptr<SpriteHandler> spriteHandler;
 	EntityType type = EntityType::Undefined;
 	Shape shape = Shape::Rectangle;
 private:
 	bool moved = true;
 	size_t id;
-};
-
-
-class Controls
-{
-public:
-	int attack;
-	int moveRight;
-	int moveUp;
-	int moveLeft;
-	int moveDown;
-	int powerMove;
-	int pause;
-};
-
-
-class Player : public Entity
-{
-public:
-	Player (sf::Vector2f pos);
-	virtual ~Player () {};
-	short lastDir;
-	float lastAttack;
-	virtual int GetX () const override;
-	virtual int GetWidth ()const override;
-
-	bool CanAttack ();
-public:
-	float vsp = 0;
-	float hsp = 0;
-	Attributes attributes;
-	Controls controls;
-	std::list<AttributeModifier*> buffs;
-private:
-};
-
-
-class Bullet : public Entity
-{
-public:
-	Bullet () = delete;
-	Bullet (sf::Vector2f pos, short direction);
-	Bullet (float x, float y, short direction);
-	~Bullet () {};
-	virtual void Move (float offsetX, float offsetY) override;
-	void Init (sf::Vector2f pos, short direction);
-	virtual void Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime) override;
-
-	short direction;
-	sf::Vector2f startPos;
-	sf::Vector2f pos;
-	int speed = 700;
-
-
-	virtual int GetX () const override;
-	virtual int GetY () const override;
-	virtual int GetLeft () const override;
-	virtual int GetTop () const override;
-};
-
-
-class Wall : public Entity
-{
-public:
-	Wall () = delete;
-	virtual ~Wall () {}
-	Wall (sf::Vector2f pos);
-	Wall (float x, float y);
-	virtual void Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime) override;
-	void Init (sf::Vector2f pos);
-	sf::Vector2f pos;
-
-
-	virtual int GetX ()	const override;
-	virtual int GetY ()	const override;
-	virtual int GetLeft ()	const override;
-	virtual int GetTop ()	const override;
-};
-
-
-class Enemy : public Entity
-{
-public:
-	Enemy () = delete;
-	virtual ~Enemy () {}
-	Enemy (sf::Vector2f pos);
-	Enemy (float x, float y);
-	virtual void Draw (std::shared_ptr<sf::RenderWindow> window, float deltaTime) override;
-	virtual void Move (float offsetX, float offsetY) override;
-	void Init (sf::Vector2f pos);
-	sf::Vector2f pos;
-	Attributes attributes;
-
-	virtual int GetX ()	const override;
-	virtual int GetY ()	const override;
-	virtual int GetLeft ()	const override;
-	virtual int GetTop ()	const override;
-
 };

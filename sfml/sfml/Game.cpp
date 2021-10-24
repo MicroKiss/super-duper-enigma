@@ -85,7 +85,6 @@ void Game::Init ()
 		player->controls.pause = sf::Keyboard::Key::Escape;
 	}
 
-
 	for (size_t i = 0; i < 1366 / 64; ++i)
 		gameLogic.AddEntity (new Wall (sf::Vector2f (64 * i, window->getSize ().y / 2.f + 300)));
 
@@ -94,7 +93,6 @@ void Game::Init ()
 	gameLogic.AddEntity (new Wall (sf::Vector2f (128 * 2, window->getSize ().y / 2.f + 300 - 64 * 2)));
 	gameLogic.AddEntity (new Wall (sf::Vector2f (128 * 3, window->getSize ().y / 2.f + 300 - 64)));
 	gameLogic.AddEntity (new Enemy (sf::Vector2f (128 * 6, window->getSize ().y / 2.f + 300 - 64)));
-
 }
 
 

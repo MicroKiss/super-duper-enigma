@@ -3,6 +3,9 @@
 #include <cassert>
 #include <memory>
 #include "SpacialIndex.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Wall.h"
 
 class GameLogic
 {

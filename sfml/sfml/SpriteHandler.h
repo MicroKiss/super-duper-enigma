@@ -4,34 +4,7 @@
 #include <fstream>
 #include <sstream>
 
-
-class ResourceManager
-{
-public:
-	static sf::Image* Get (std::string resourcePath)
-	{
-		static ResourceManager    instance;
-		if (!instance.storage.contains (resourcePath)) {
-			sf::Image image;
-			image.loadFromFile (resourcePath);
-
-			instance.storage.insert ({resourcePath, image});
-		}
-
-		return instance.InnerGet (resourcePath);
-
-	}
-private:
-	ResourceManager () {}
-	std::map<std::string, sf::Image> storage;
-	sf::Image* InnerGet (std::string resourcePath)
-	{
-		return &storage.at (resourcePath);
-	}
-public:
-	ResourceManager (ResourceManager const&) = delete;
-	void operator=(ResourceManager const&) = delete;
-};
+#include "ResourceManager.h"
 
 
 class SpriteSheet
@@ -71,7 +44,6 @@ public:
 						  float updateInterval = 0.1,
 						  bool loop = true);
 
-public:
 	sf::Sprite currentSprite;
 	unsigned short currentSpriteIndex = 0;
 	SpriteSheet* currentSpriteSheet = nullptr;
