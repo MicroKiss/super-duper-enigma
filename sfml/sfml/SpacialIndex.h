@@ -14,12 +14,13 @@ dinamikus statiksu objektumok az alapján h mozogtak e ? v typeID alapján
 class SpacialIndex
 {
 public:
-	SpacialIndex ();
+	SpacialIndex(int gridSize = 128);
 	~SpacialIndex ();
 	std::list<Entity *> *operator()(std::pair <int, int> coords);
 	std::list<Entity *> *operator()(int n, int m);
 	void Clear ();
-	void CreateIndex (std::list<Entity *> *entities, int gridSize = 8);
+	bool DoEntityNeedsToBeUpdated(Entity* ent);
+	void CreateIndex (std::list<Entity *> *entities);
 	Entity *CheckCollision (Entity *ent, EntityType typeId);
 	Entity *CheckCollision (const sf::IntRect &rect, EntityType typeId);
 	Entity *CheckCollision (float x, float y, float w, float h, EntityType typeId);

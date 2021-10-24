@@ -5,8 +5,6 @@
 #include <iostream>
 #include "SpriteHandler.h"
 
-
-
 enum class EntityType
 {
 	Undefined = 0,
@@ -16,11 +14,13 @@ enum class EntityType
 	Enemy
 };
 
+
 enum class Shape
 {
-	Rectangle = 0,
-	Circle,
+	Rectangle	= 0,
+	Circle		= 1,
 };
+
 
 struct Attributes
 {
@@ -44,6 +44,7 @@ public:
 	virtual void apply (Attributes &attributes) = 0;
 	bool Expired () { return clock.getElapsedTime () > duration; }
 };
+
 
 class DoubleSpeedBuff : public AttributeModifier
 {
@@ -76,14 +77,17 @@ public:
 	virtual int GetTop ()const;
 	virtual int GetWidth ()const;
 	virtual int GetHeight ()const;
+	virtual bool NeedsToBeIndexUpdated() const;
 	virtual sf::Vector2f GetCenter () const;
 	virtual sf::IntRect GetBoundingBox (int offsetX = 0, int offsetY = 0, int offsetW = 0, int offsetH = 0) const;
 	size_t GetID ()const { return id; }
+	void Moved( bool b = true);
 public:
 	SpriteHandler *spriteHandler;
 	EntityType type = EntityType::Undefined;
 	Shape shape = Shape::Rectangle;
 private:
+	bool moved = true;
 	size_t id;
 };
 
@@ -121,6 +125,7 @@ public:
 private:
 };
 
+
 class Bullet : public Entity
 {
 public:
@@ -144,6 +149,7 @@ public:
 	virtual int GetTop	() const override;
 };
 
+
 class Wall : public Entity
 {
 public:
@@ -161,6 +167,7 @@ public:
 	virtual int GetLeft ()	const override;
 	virtual int GetTop	()	const override;
 };
+
 
 class Enemy : public Entity
 {

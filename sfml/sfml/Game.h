@@ -24,6 +24,7 @@ private:
 	void HandleJoystickButtonPressed (unsigned int buttonCode, const Controls& controls);
 	void HandleJoystickButtonReleased (unsigned int buttonCode, const Controls& controls);
 	void HandleJoystickMove (sf::Joystick::Axis axis, float position, const Controls& controls);
+	void DrawPauseMenu();
 
 
 private:

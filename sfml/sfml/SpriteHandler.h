@@ -1,6 +1,39 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <map>
+#include <fstream>
+#include <sstream>
+
+
+
+
+class ResourceManager
+{
+public:
+	static sf::Image* Get(std::string resourcePath)
+	{
+		static ResourceManager    instance;
+		if (!instance.storage.contains(resourcePath)) {
+			sf::Image image;
+			image.loadFromFile(resourcePath);
+
+			instance.storage.insert({resourcePath, image});
+		}
+
+		return instance.InnerGet(resourcePath);
+
+	}
+private:
+	ResourceManager() {}
+	std::map<std::string,  sf::Image> storage;
+	sf::Image* InnerGet(std::string resourcePath) {
+		return &storage.at(resourcePath);
+	}
+public:
+	ResourceManager(ResourceManager const&) = delete;
+	void operator=(ResourceManager const&) = delete;
+};
+
 
 
 class SpriteSheet
@@ -48,91 +81,4 @@ public:
 	SpriteHandler () {};
 	std::map<std::string, SpriteSheet> loadedSpriteSheets;
 	float timeSinceLastUpdate = 0;
-};
-
-
-
-class SingletonBulletSpriteHandler
-{
-	SpriteHandler *spriteHandler = nullptr;
-
-	// Private constructor so that no objects can be created.
-	SingletonBulletSpriteHandler () {
-		spriteHandler = new SpriteHandler;
-		spriteHandler->LoadSpriteSheet ("idle", "assets/bullet.png", 10, 10, 1);
-		spriteHandler->SetSprite ("idle");
-	}
-
-	~SingletonBulletSpriteHandler () {
-		delete spriteHandler;
-	}
-
-	SpriteHandler *getData () {
-		return this->spriteHandler;
-	}
-public:
-	static SingletonBulletSpriteHandler *getInstance () {
-		static SingletonBulletSpriteHandler *instance = new SingletonBulletSpriteHandler;
-		return instance;
-	}
-	static SpriteHandler *GetSpriteHandler () {
-		return getInstance ()->getData ();
-	}
-};
-
-
-class SingletonWallSpriteHandler
-{
-	SpriteHandler *spriteHandler = nullptr;
-
-	// Private constructor so that no objects can be created.
-	SingletonWallSpriteHandler () {
-		spriteHandler = new SpriteHandler;
-		spriteHandler->LoadSpriteSheet ("idle", "assets/wall.png", 64, 64, 1);
-		spriteHandler->SetSprite ("idle");
-	}
-
-	~SingletonWallSpriteHandler () {
-		delete spriteHandler;
-	}
-
-	SpriteHandler *getData () {
-		return this->spriteHandler;
-	}
-public:
-	static SingletonWallSpriteHandler *getInstance () {
-		static SingletonWallSpriteHandler *instance = new SingletonWallSpriteHandler;
-		return instance;
-	}
-	static SpriteHandler *GetSpriteHandler () {
-		return getInstance ()->getData ();
-	}
-};
-
-class SingletonEnemySpriteHandler
-{
-	SpriteHandler *spriteHandler = nullptr;
-
-	// Private constructor so that no objects can be created.
-	SingletonEnemySpriteHandler () {
-		spriteHandler = new SpriteHandler;
-		spriteHandler->LoadSpriteSheet ("idle", "assets/enemy.png", 48, 64, 1);
-		spriteHandler->SetSprite ("idle");
-	}
-
-	~SingletonEnemySpriteHandler () {
-		delete spriteHandler;
-	}
-
-	SpriteHandler *getData () {
-		return this->spriteHandler;
-	}
-public:
-	static SingletonEnemySpriteHandler *getInstance () {
-		static SingletonEnemySpriteHandler *instance = new SingletonEnemySpriteHandler;
-		return instance;
-	}
-	static SpriteHandler *GetSpriteHandler () {
-		return getInstance ()->getData ();
-	}
 };

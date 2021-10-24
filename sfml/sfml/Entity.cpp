@@ -15,6 +15,7 @@ void Entity::Draw (sf::RenderWindow *const window, float deltaTime) {
 void Entity::Move (float offsetX, float offsetY)
 {
 	spriteHandler->currentSprite.move (offsetX, offsetY);
+	Moved();
 }
 
 int Entity::GetX () const
@@ -48,6 +49,11 @@ int Entity::GetHeight () const
 	return spriteHandler->currentSpriteSheet->height;
 }
 
+bool Entity::NeedsToBeIndexUpdated() const
+{
+	return moved;
+}
+
 sf::Vector2f Entity::GetCenter () const
 {
 	return spriteHandler->currentSprite.getPosition () - spriteHandler->currentSprite.getOrigin ()
@@ -57,6 +63,11 @@ sf::Vector2f Entity::GetCenter () const
 sf::IntRect Entity::GetBoundingBox (int offsetX, int offsetY, int offsetW, int offsetH) const
 {
 	return sf::IntRect (GetX () + offsetX, GetY () + offsetY, GetWidth () + offsetW, GetHeight () + offsetH);
+}
+
+void Entity::Moved(bool b)
+{
+	moved = b;
 }
 
 Player::Player (sf::Vector2f pos)
@@ -84,7 +95,7 @@ int Player::GetX () const
 
 int Player::GetWidth () const
 {
-	return Entity::GetWidth() -10;
+	return Entity::GetWidth() -20;
 }
 
 bool Player::CanAttack ()
@@ -111,7 +122,7 @@ void Bullet::Move (float offsetX, float offsetY)
 {
 	pos.x += offsetX;
 	pos.y += offsetY;
-
+	Moved();
 }
 
 void Bullet::Init (sf::Vector2f pos, short direction)
@@ -120,7 +131,9 @@ void Bullet::Init (sf::Vector2f pos, short direction)
 	startPos = pos;
 	this->direction = direction;
 	type = EntityType::Bullet;
-	spriteHandler = SingletonBulletSpriteHandler::GetSpriteHandler ();
+	spriteHandler = new SpriteHandler;
+	spriteHandler->LoadSpriteSheet("idle", "assets/bullet.png", 10, 10, 1);
+	spriteHandler->SetSprite("idle");
 }
 
 
@@ -157,11 +170,11 @@ Wall::Wall (sf::Vector2f pos)
 }
 
 
-
 Wall::Wall (float x, float y)
 {
 	Init (sf::Vector2f (x, y));
 }
+
 
 void Wall::Draw (sf::RenderWindow *const window, float deltaTime)
 {
@@ -170,12 +183,13 @@ void Wall::Draw (sf::RenderWindow *const window, float deltaTime)
 }
 
 
-
 void Wall::Init (sf::Vector2f pos)
 {
 	this->pos = pos;
 	type = EntityType::Wall;
-	spriteHandler = SingletonWallSpriteHandler::GetSpriteHandler ();
+	spriteHandler = new SpriteHandler;
+	spriteHandler->LoadSpriteSheet("idle", "assets/wall.png", 64, 64, 1);
+	spriteHandler->SetSprite("idle");
 }
 
 int Wall::GetX () const
@@ -218,13 +232,16 @@ void Enemy::Move (float offsetX, float offsetY)
 {
 	pos.x += offsetX;
 	pos.y += offsetY;
+	Moved();
 }
 
 void Enemy::Init (sf::Vector2f pos)
 {
 	this->pos = pos;
 	type = EntityType::Enemy;
-	spriteHandler = SingletonEnemySpriteHandler::GetSpriteHandler ();
+	spriteHandler = new SpriteHandler;
+	spriteHandler->LoadSpriteSheet("idle", "assets/enemy.png", 48, 64, 1);
+	spriteHandler->SetSprite("idle");
 	attributes = {100,100, 200, 400, 10, 1, 0, 0};
 
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <memory>
 #include "SpacialIndex.h"
 
 class GameLogic
@@ -9,8 +10,6 @@ public:
 	GameLogic () {
 		entities = nullptr;
 		inputs = nullptr;
-		player1 = nullptr;
-		player2 = nullptr;
 	};
 	~GameLogic ();
 	void Update (float deltaTime);
@@ -28,13 +27,14 @@ public:
 
 	void SetInputs (std::set<sf::Keyboard::Key> *inputsPointer);
 	void SetEntities (std::list<Entity *> *entitiesPointer);
-	Player *player1;
-	Player *player2;
+
+	std::shared_ptr<Player> player1;
+	std::shared_ptr<Player> player2;
 private:
 	SpacialIndex spacialIndex;
 	std::list<Entity *> *entities;
 	std::list<Entity *> entitiesToRemove;
-	std::set<sf::Keyboard::Key> *inputs;
+	std::shared_ptr<std::set<sf::Keyboard::Key>> inputs;
 
 };
 

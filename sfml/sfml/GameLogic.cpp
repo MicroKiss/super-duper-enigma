@@ -1,13 +1,14 @@
 #include "GameLogic.h"
+#include <memory>
 
 Entity *GameLogic::AddEntity (Entity *ent)
 {
 	if (ent->type == EntityType::Player) {
 		assert (player2 == nullptr);
 	if (player1 == nullptr)
-		player1 = static_cast<Player *> (ent);
+		player1 = std::shared_ptr<Player> (static_cast<Player *> (ent));
 	else
-		player2 = static_cast<Player *> (ent);
+		player2 = std::shared_ptr<Player> (static_cast<Player *> (ent));
 	}
 
 	entities->push_back (ent);
@@ -37,7 +38,7 @@ bool GameLogic::IsPressed (int button)
 
 void GameLogic::SetInputs (std::set<sf::Keyboard::Key> *inputsPointer)
 {
-	inputs = inputsPointer;
+	inputs = std::shared_ptr<std::set<sf::Keyboard::Key>> (inputsPointer);
 }
 
 
@@ -47,19 +48,19 @@ void GameLogic::SetEntities (std::list<Entity *> *entitiesPointer)
 }
 
 
-
 GameLogic::~GameLogic ()
 {
-	if (player1)
-		delete player1;
-	if (player2)
-		delete player2;
+	if(entities)
+		for (auto& i : *entities)
+			delete i;
 }
+
 
 void GameLogic::Update (float deltaTime)
 {
 	UpdateEntities (deltaTime);
 }
+
 
 void GameLogic::UpdatePlayer (Player *player, float deltaTime)
 {
@@ -75,7 +76,6 @@ void GameLogic::UpdatePlayer (Player *player, float deltaTime)
 		else
 			++it;
 	}
-
 
 	const static float grav = 21;
 	const static float maxFallSpeed = 500;
@@ -104,18 +104,18 @@ void GameLogic::UpdatePlayer (Player *player, float deltaTime)
 	if (vsp < maxFallSpeed)
 		vsp += grav;
 
-
-	auto wallUnder = spacialIndex.CheckCollision (player->GetBoundingBox (0, 1 + deltaTime * vsp), EntityType::Wall);
+	auto wallUnder = spacialIndex.CheckCollision (player->GetBoundingBox (0, deltaTime * vsp), EntityType::Wall);
 	if (wallUnder) {
 
 		//pixel perfect
 		player->Move (0, wallUnder->GetTop () - player->GetTop () - 61);
 		//while (!spacialIndex.CheckCollision (player->GetBoundingBox (0, 1), EntityType::Wall))
 		//	player->Move (0, 1);
-		vsp = 0;
-		vsp = (IsPressed (player->controls.moveUp) ) * -player->attributes.jumpSpeed;
+		//vsp = 0;
+		//vsp = (IsPressed (player->controls.moveUp) ) * -player->attributes.jumpSpeed;
 	}
-	*/
+	
+		*/
 
 	if (spacialIndex.CheckCollision (player->GetBoundingBox (deltaTime * hsp), EntityType::Wall)) {
 		hsp = 0;
@@ -176,6 +176,7 @@ void GameLogic::UpdateBullet (Bullet *bullet, float deltaTime)
 	}
 }
 
+
 void GameLogic::UpdateEnemy (Enemy *enemy, float deltaTime)
 {
 	if (Distance (player1->GetCenter ().x, player1->GetCenter ().y, enemy->GetCenter ().x, enemy->GetCenter ().y) < 200)
@@ -183,12 +184,10 @@ void GameLogic::UpdateEnemy (Enemy *enemy, float deltaTime)
 		enemy->Move (Sign (player1->GetCenter ().x - enemy->GetCenter ().x), 0);
 	}
 
-
-
 	if (enemy->attributes.health <= 0)
 		entitiesToRemove.push_back (enemy);
-
 }
+
 
 void GameLogic::UpdateEntity (Entity *e, float deltaTime)
 {
@@ -207,6 +206,7 @@ void GameLogic::UpdateEntity (Entity *e, float deltaTime)
 		break;
 	}
 }
+
 
 void GameLogic::UpdateEntities (float deltaTime)
 {

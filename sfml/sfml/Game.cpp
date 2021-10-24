@@ -5,6 +5,7 @@
 Game::Game ()
 {
 	window = new sf::RenderWindow (sf::VideoMode (1366, 768), "Micro Game!");
+	//window->setFramerateLimit(144);
 	window->setVerticalSyncEnabled (true);
 	alive = true;
 	gameLogic.SetInputs (&inputs);
@@ -36,25 +37,19 @@ void Game::Exit () {
 
 void Game::Draw ()
 {
+	//lehetne static 
+
 	window->clear (sf::Color::Yellow);
-
-	if (!paused)
+	//fps
 	{
+		std::cout << 1 / deltaTime << "\n";
+	}
 
+	if (!paused) {
 		for (auto &entity : entities)
 			entity->Draw (window, deltaTime);
-	}
-	else {
-		sf::Font font;
-		font.loadFromFile ("assets/Dale Adventure.ttf");
-		sf::Text text;
-		text.setFont (font);
-		text.setString ("PAUSED");
-		text.setCharacterSize (100);
-		text.setFillColor (sf::Color::Red);
-		text.setStyle (sf::Text::Bold | sf::Text::Underlined);
-		text.setPosition (window->getSize ().x / 2.f, window->getSize ().y / 2.f);
-		window->draw (text);
+	} else {
+		DrawPauseMenu();
 	}
 	//draw ui
 	window->display ();
@@ -63,7 +58,7 @@ void Game::Draw ()
 void Game::Init ()
 {
 	{
-		Entity* entity = gameLogic.AddEntity (new Player (sf::Vector2f (128*2, window->getSize ().y / 2.f)));
+		Entity* entity = gameLogic.AddEntity (new Player (sf::Vector2f (128, window->getSize ().y / 2.f-128)));
 		Player* player = static_cast<Player*> (entity);
 		player->controls.moveUp = sf::Keyboard::Key::W;
 		player->controls.moveLeft = sf::Keyboard::Key::A;
@@ -73,6 +68,7 @@ void Game::Init ()
 		player->controls.powerMove = sf::Keyboard::Key::K;
 		player->controls.pause = sf::Keyboard::Key::Escape;
 	}
+
 	{
 		Entity* entity = gameLogic.AddEntity (new Player (sf::Vector2f (128 * 3, window->getSize ().y / 2.f)));
 		Player* player = static_cast<Player*> (entity);
@@ -94,7 +90,7 @@ void Game::Init ()
 	gameLogic.AddEntity (new Wall (sf::Vector2f (128*2, window->getSize ().y / 2.f + 300-64*2)));
 	gameLogic.AddEntity (new Wall (sf::Vector2f (128*3, window->getSize ().y / 2.f + 300-64)));
 	gameLogic.AddEntity (new Enemy (sf::Vector2f (128*6, window->getSize ().y / 2.f + 300-64)));
-
+	
 }
 
 void Game::KeyDown (int button)
@@ -163,6 +159,25 @@ void Game::HandleJoystickMove (sf::Joystick::Axis axis, float position, const Co
 	default:
 		break;
 	}
+}
+
+void Game::DrawPauseMenu()
+{
+	static sf::Font font;
+	static sf::Text text;
+
+	static bool once = [&]() {
+		font.loadFromFile("assets/Dale Adventure.ttf");
+		text.setFont(font);
+		text.setString("PAUSED");
+		text.setCharacterSize(100);
+		text.setFillColor(sf::Color::Red);
+		text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+		text.setPosition(window->getSize().x / 2.f, window->getSize().y / 2.f);
+		return true;
+	} ();
+
+	window->draw(text);
 }
 
 

@@ -18,7 +18,7 @@ SpriteSheet::SpriteSheet (
 	this->numberOfSprites = numberOfSprites;
 	this->updateInterval = updateInterval;
 	this->loop = loop;
-	if (!texture.loadFromFile (filePath))
+	if (!texture.loadFromImage (*ResourceManager::Get (filePath)))
 		throw 1;
 }
 
