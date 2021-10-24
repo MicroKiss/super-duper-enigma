@@ -191,8 +191,20 @@ void GameLogic::UpdateEntity (Entity* e, float deltaTime)
 		case EntityType::Enemy:
 			UpdateEnemy (static_cast<Enemy*> (e), deltaTime);
 			break;
+		case EntityType::PlayerLink:
+			UpdatePlayerLink (static_cast<PlayerLink*> (e), deltaTime);
 		default:
 			break;
+	}
+}
+
+void GameLogic::UpdatePlayerLink (PlayerLink* e, float deltaTime)
+{
+	float distance = Distance(e->player1->GetCenter ().x, e->player1->GetCenter ().y,
+						  e->player2->GetCenter ().x, e->player2->GetCenter ().y);
+	if (distance > 500) {
+		static int asd = 0;
+		std::cout <<asd++ << "toofar\n";
 	}
 }
 

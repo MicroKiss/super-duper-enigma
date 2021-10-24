@@ -115,8 +115,11 @@ std::list<Entity*> SpacialIndex::Query (const sf::IntRect& rect)
 			if (index.contains (std::pair<int, int> (x, y))) {
 				auto cellData = index[std::pair<int, int> (x, y)];
 				for (auto& e : cellData) {
-					auto asd = e->spriteHandler->currentSprite.getGlobalBounds ();
-					if (RectangleIntersect (rect.left, rect.top, rect.width, rect.height, asd.left, asd.top, asd.width, asd.height))
+					if (!e->spriteHandler)
+						continue;
+					auto boundingRectangle = e->spriteHandler->currentSprite.getGlobalBounds ();
+					if (RectangleIntersect (rect.left, rect.top, rect.width, rect.height, boundingRectangle.left,
+											boundingRectangle.top, boundingRectangle.width, boundingRectangle.height))
 						if (std::find (result.begin (), result.end (), e) == result.end ())
 							result.push_back (e);
 					//if (/*e != ent &&*/ std::find (result.begin (), result.end (), e) == result.end ())

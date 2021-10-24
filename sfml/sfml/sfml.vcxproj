@@ -162,6 +162,7 @@
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerLink.cpp" />
     <ClCompile Include="SpacialIndex.cpp" />
     <ClCompile Include="SpriteHandler.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="MicroMath.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerLink.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SpacialIndex.h" />
     <ClInclude Include="SpriteHandler.h" />

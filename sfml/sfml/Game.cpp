@@ -45,7 +45,7 @@ void Game::Draw ()
 	window->clear (sf::Color::Yellow);
 	//fps
 	{
-		std::cout << 1 / deltaTime << "\n";
+		//float fps =   1 / deltaTime;
 	}
 
 	if (!paused) {
@@ -61,6 +61,7 @@ void Game::Draw ()
 
 void Game::Init ()
 {
+	//players
 	{
 		Entity* entity = gameLogic.AddEntity (new Player (sf::Vector2f (128, window->getSize ().y / 2.f - 128)));
 		Player* player = static_cast<Player*> (entity);
@@ -72,7 +73,6 @@ void Game::Init ()
 		player->controls.powerMove = sf::Keyboard::Key::K;
 		player->controls.pause = sf::Keyboard::Key::Escape;
 	}
-
 	{
 		Entity* entity = gameLogic.AddEntity (new Player (sf::Vector2f (128 * 3, window->getSize ().y / 2.f)));
 		Player* player = static_cast<Player*> (entity);
@@ -83,15 +83,21 @@ void Game::Init ()
 		player->controls.attack = sf::Keyboard::Key::Numpad1;
 		player->controls.powerMove = sf::Keyboard::Key::Numpad2;
 		player->controls.pause = sf::Keyboard::Key::Escape;
+
 	}
+	Entity* entity = gameLogic.AddEntity (new PlayerLink (gameLogic.player1, gameLogic.player2));
 
-	for (size_t i = 0; i < 1366 / 64; ++i)
-		gameLogic.AddEntity (new Wall (sf::Vector2f (64 * i, window->getSize ().y / 2.f + 300)));
 
-	gameLogic.AddEntity (new Wall (sf::Vector2f (128, window->getSize ().y / 2.f + 300 - 64)));
-	gameLogic.AddEntity (new Wall (sf::Vector2f (128 * 2, window->getSize ().y / 2.f + 300 - 64)));
-	gameLogic.AddEntity (new Wall (sf::Vector2f (128 * 2, window->getSize ().y / 2.f + 300 - 64 * 2)));
-	gameLogic.AddEntity (new Wall (sf::Vector2f (128 * 3, window->getSize ().y / 2.f + 300 - 64)));
+	// walls
+	{
+		for (size_t i = 0; i < 1366 / 64; ++i)
+			gameLogic.AddEntity (new Wall (sf::Vector2f (64 * i, window->getSize ().y / 2.f + 300)));
+
+		gameLogic.AddEntity (new Wall (sf::Vector2f (128, window->getSize ().y / 2.f + 300 - 64)));
+		gameLogic.AddEntity (new Wall (sf::Vector2f (128 * 2, window->getSize ().y / 2.f + 300 - 64)));
+		gameLogic.AddEntity (new Wall (sf::Vector2f (128 * 2, window->getSize ().y / 2.f + 300 - 64 * 2)));
+		gameLogic.AddEntity (new Wall (sf::Vector2f (128 * 3, window->getSize ().y / 2.f + 300 - 64)));
+	}
 	gameLogic.AddEntity (new Enemy (sf::Vector2f (128 * 6, window->getSize ().y / 2.f + 300 - 64)));
 }
 

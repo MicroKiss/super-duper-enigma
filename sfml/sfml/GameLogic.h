@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Wall.h"
+#include "PlayerLink.h"
 
 class GameLogic
 {
@@ -21,6 +22,7 @@ public:
 	void UpdateBullet (Bullet* bullet, float deltaTime);
 	void UpdateEnemy (Enemy* enemy, float deltaTime);
 	void UpdateEntity (Entity* e, float deltaTime);
+	void UpdatePlayerLink (PlayerLink* e, float deltaTime);
 	void UpdateEntities (float deltaTime);
 
 	Entity* AddEntity (Entity* ent);

@@ -11,7 +11,8 @@ enum class EntityType
 	Player,
 	Bullet,
 	Wall,
-	Enemy
+	Enemy,
+	PlayerLink
 };
 
 
