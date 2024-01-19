@@ -2,5 +2,6 @@
 **/.vscode
 **/Debug
 **/Release
+**/build
 **/.vs
 Common Error Handler/erroroutputfile.txt
