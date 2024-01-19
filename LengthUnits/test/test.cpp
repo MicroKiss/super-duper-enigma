@@ -91,6 +91,26 @@ TEST (LengthUnitsBase, Decrement) {
     EXPECT_EQ ((--miles).Count (), originalVal - 1.);
 }
 
+TEST (LengthUnitsBase, Addition) {
+    Meters m = Meters ();
+
+    EXPECT_EQ (m + m, Meters(2));
+    EXPECT_EQ ((Meters (2.3) + Meters(8.5)).Count (), 2.3 + 8.5);
+
+    EXPECT_EQ (Inches(4) + Inches(8), Feet());
+    EXPECT_EQ (CentiMeters(123.34) + KiloMeters(8), DeciMeters(80012.334));
+}
+
+TEST (LengthUnitsBase, Subtraction) {
+    Meters m = Meters ();
+
+    EXPECT_EQ (m - m, Meters(0));
+    EXPECT_EQ ((Meters (10.3) - Meters(2.1)).Count (), 10.3-2.1);
+
+    EXPECT_EQ (Miles(4) - Feet(5280. * 1.5), Miles(2.5));
+    EXPECT_EQ (KiloMeters(8) - CentiMeters(123), DeciMeters(79987.7));
+}
+
 TEST (LengthUnitsBase, Multiplication) {
     Meters m = Meters ();
 
@@ -104,7 +124,6 @@ TEST (LengthUnitsBase, Multiplication) {
 
 TEST (LengthUnitsBase, Division) {
     Meters m = Meters ();
-
     EXPECT_EQ (m / 1, m);
     EXPECT_EQ ((Meters (2.3) / .5).Count (), 2.3 / .5);
 

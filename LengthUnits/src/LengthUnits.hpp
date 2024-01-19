@@ -115,6 +115,14 @@ operator+ (const Distance<ratio1> &left, const Distance<ratio2> &right) {
 }
 
 template <class ratio1, class ratio2>
+constexpr typename common_distance<Distance<ratio1>, Distance<ratio2>>::type
+operator- (const Distance<ratio1> &left, const Distance<ratio2> &right) {
+    using _CR = typename common_distance<Distance<ratio1>, Distance<ratio2>>::type;
+
+    return _CR (_CR (left).Count () - _CR (right).Count ());
+}
+
+template <class ratio1, class ratio2>
 constexpr bool operator== (const Distance<ratio1> &left, const Distance<ratio2> &right) {
     using _CR = typename common_distance<Distance<ratio1>, Distance<ratio2>>::type;
 
@@ -124,6 +132,13 @@ constexpr bool operator== (const Distance<ratio1> &left, const Distance<ratio2> 
 template <class ratio1, class ratio2>
 constexpr bool operator!= (const Distance<ratio1> &left, const Distance<ratio2> &right) {
     return !(left == right);
+}
+
+template<class ratio>
+std::ostream& operator<<(std::ostream& os, const Distance<ratio>& d)
+{
+    os << d.Count();
+    return os;
 }
 
 using NanoMeters = Distance<std::nano>;
