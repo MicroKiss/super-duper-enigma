@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "6eIRFUyQJJ+i+CAcSqB0TaW9UcIDMIxh+8h9GEW3igwcj3zdGHNFnFDBkAiMpt2nVorvAZtSGEiUf+5OzEH05Q==",
+  "dgSpecHash": "P8DOKIXKpwaYRSrsnTmQLXqRq7g8stEsWWTQ2Sr/MsJF22FTDzDFqXXtbWeRFjktOlKoCBdrxH1/19MJABaYjA==",
   "success": true,
-  "projectFilePath": "D:\\Dev\\WpfApp1\\WpfApp1.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\jakiss\\Desktop\\git\\super-duper-enigma\\WpfApp1\\WpfApp1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jakiss\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\jakiss\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\jakiss\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\jakiss\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.26\\microsoft.netcore.app.host.win-x64.6.0.26.nupkg.sha512"
+  ],
   "logs": []
 }

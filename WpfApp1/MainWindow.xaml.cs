@@ -17,13 +17,32 @@ using System.Globalization;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
 using Image = System.Windows.Controls.Image;
+using System.ComponentModel;
 
 namespace WpfApp1
 {
 
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public ObservableCollection<Node> NodeCollection { get; set; }
+        private ObservableCollection<Node> _nodeCollection;
+        public ObservableCollection<Node> NodeCollection
+        {
+            get { return _nodeCollection; }
+            set
+            {
+                if (_nodeCollection != value)
+                {
+                    _nodeCollection = value;
+                    OnPropertyChanged(nameof(NodeCollection));
+                }
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         enum DisplayType
         {
             Large,
@@ -31,28 +50,41 @@ namespace WpfApp1
             //List ???
         }
 
+        IConnector connector { get; set; }
+        private uint? currentNodeIndex;
 
         public MainWindow ()
         {
+            connector = new ConnectorMock ();
             InitializeComponent();
             // Initialize the NodeCollection and add sample nodes
-            NodeCollection = new ObservableCollection<Node>
-            {
-                new Node ( "Node 1" ),
-                new Node ( "Node 2" ),
-                // Add more sample nodes as needed
-            };
+            //TODO
+            currentNodeIndex = null;
+            NodeCollection = new ObservableCollection<Node>(connector.GetRootNodes());
 
             // Set the DataContext of the window to this instance
             DataContext = this;
 
         }
 
+        private void NavigateToNode(uint? index)
+        {
+            if (index == null) {
+                NodeCollection = new ObservableCollection<Node>(connector.GetRootNodes());
+            } else {
+                // a jelenlegi megjelenites n edik elemere rakattintva ki kellene nyerni azon elem gyerekeit.
+                // ehhez kellene a valodi indexe annak a node-nak amit nem tudnuk :/
+                //uint? realIndex = connector.GetChildNodeAtIndex(currentNodeIndex.Value, index.Value);
+                //NodeCollection = new ObservableCollection<Node>(connector.GetChildrenOfRootNode(realIndex));
+            }
+            currentNodeIndex = index;
+        }
+
         private void OnItemClicked (object sender, MouseButtonEventArgs e)
         {
             if (sender is FrameworkElement clickedElement && clickedElement.DataContext is Node clickedNode) {
-                // Handle the click event logic here
-                MessageBox.Show($"Node clicked: {clickedNode.Label}");
+                uint? index = (uint?)NodeCollection.IndexOf(clickedNode);
+                NavigateToNode(index);
             }
         }
         private void OnLargeClicked (object sender, MouseButtonEventArgs e)
@@ -62,6 +94,10 @@ namespace WpfApp1
         private void OnSmallClicked (object sender, MouseButtonEventArgs e)
         {
             ChangeDisplayType(DisplayType.Small);
+        }        
+        private void OnBackClicked(object sender, MouseButtonEventArgs e)
+        {
+            // here implement going back to parent
         }
 
 

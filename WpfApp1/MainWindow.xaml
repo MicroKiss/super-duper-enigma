@@ -20,13 +20,13 @@
 
             <TextBlock Text="Objects" Margin="15 15 15 15" Width="483" Background="White" IsEnabled="False" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" TextAlignment="Center">
             </TextBlock>
-            <ContentControl Width="20" Height="20" Margin="5" IsEnabled="False">
+            <ContentControl Width="20" Height="20" Margin="5" IsEnabled="False" MouseLeftButtonDown="OnBackClicked">
                 <Grid>
                     <Rectangle Width="20" Height="20" Fill="White"/>
-                    <TextBlock Text="?" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="&lt;&lt;" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
             </ContentControl>
-            <ContentControl Width="20" Height="20" Margin="5" MouseLeftButtonDown="OnLargeClicked">
+            <ContentControl Width="20" Height="20" Margin="45 5 5 5" MouseLeftButtonDown="OnLargeClicked">
                 <Grid>
                     <Rectangle Width="20" Height="20" Fill="White"/>
                     <TextBlock Text="L" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>

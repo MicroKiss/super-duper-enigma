@@ -29,8 +29,8 @@ namespace WpfApp1
         {
             Label = label;
             DisplayMode = displayMode;
-            LargeIcon = GetExampleIcon(); //largeIcon;
-            SmallIcon = GetExampleIcon();//smallIcon;
+            LargeIcon = GetExampleIcon();
+            SmallIcon = GetExampleIcon();
         }
 
         private List<byte> GetExampleIcon ()
@@ -39,45 +39,6 @@ namespace WpfApp1
             return new List<byte> (Convert.FromBase64String(base64Image));
         }
 
-        //public List<Node> GetRootNodes ()
-        //{
-        //    return new List<Node>();
-        //}
-
-        //public Node GetRootNodeAtIndex (uint rootNodeIndex)
-        //{
-        //    return new Node();
-        //}
-
-        //public void SetRootNodeLabel (uint rootNodeIndex, string label)
-        //{
-        //    // Implementation here
-        //}
-
-        //public void SetRootNodeDisplayMode (uint rootNodeIndex, DisplayMode? displayMode)
-        //{
-        //    // Implementation here
-        //}
-
-        //public List<Node> GetChildrenOfRootNode (uint rootNodeIndex)
-        //{
-        //    return new List<Node>();
-        //}
-
-        //public Node GetChildNodeAtIndex (uint rootNodeIndex, uint childNodeIndex)
-        //{
-        //    return new Node();
-        //}
-
-        //public void SetChildNodeLabel (uint rootNodeIndex, uint childNodeIndex, string label)
-        //{
-        //    // Implementation here
-        //}
-
-        //public void SetChildNodeDisplayMode (uint rootNodeIndex, uint childNodeIndex, DisplayMode? displayMode)
-        //{
-        //    // Implementation here
-        //}
     }
 
 

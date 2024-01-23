@@ -8,19 +8,19 @@
     "net6.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\dinny\\.nuget\\packages\\": {}
+    "C:\\Users\\jakiss\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dev\\WpfApp1\\WpfApp1.csproj",
+      "projectUniqueName": "C:\\Users\\jakiss\\Desktop\\git\\super-duper-enigma\\WpfApp1\\WpfApp1.csproj",
       "projectName": "WpfApp1",
-      "projectPath": "D:\\Dev\\WpfApp1\\WpfApp1.csproj",
-      "packagesPath": "C:\\Users\\dinny\\.nuget\\packages\\",
-      "outputPath": "D:\\Dev\\WpfApp1\\obj\\",
+      "projectPath": "C:\\Users\\jakiss\\Desktop\\git\\super-duper-enigma\\WpfApp1\\WpfApp1.csproj",
+      "packagesPath": "C:\\Users\\jakiss\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jakiss\\Desktop\\git\\super-duper-enigma\\WpfApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\dinny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jakiss\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -56,6 +56,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.26, 6.0.26]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.26, 6.0.26]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.26, 6.0.26]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.26, 6.0.26]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
@@ -64,7 +82,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
