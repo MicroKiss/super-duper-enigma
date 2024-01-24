@@ -31,6 +31,12 @@ namespace WpfApp1
             DataContext = mainViewModel;
         }
 
+        private void OnMouseMove (object sender, MouseEventArgs e)
+        {
+            if (DataContext is MainViewModel viewModel)
+                viewModel.MousePosition = e.GetPosition((IInputElement)sender);
+        }
+
         private void StackPanel_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
         {
             // Check if the sender is a FrameworkElement
@@ -47,8 +53,6 @@ namespace WpfApp1
                 }
             }
         }
-
-
 
         private void itemsControl_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
         {

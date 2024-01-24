@@ -17,41 +17,46 @@
                 <!-- Add more DataTriggers as needed -->
             </Style.Triggers>
         </Style>
+        <DataTemplate x:Key="RegularTextTemplate">
+            <TextBlock FontSize="{Binding FontSize}" Text="{Binding Label}" Margin="2" HorizontalAlignment="Center"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="BoldTextTemplate">
+            <TextBlock FontSize="{Binding FontSize}" FontWeight="Bold" Text="{Binding Label}" Margin="2" HorizontalAlignment="Center"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ItalicTextTemplate">
+            <TextBlock FontSize="{Binding FontSize}" FontStyle="Italic" Text="{Binding Label}" Margin="2" HorizontalAlignment="Center"/>
+        </DataTemplate>
+        <DataTemplate x:Key="UnderLinedTextTemplate">
+            <TextBlock FontSize="{Binding FontSize}" TextDecorations="Underline" Text="{Binding Label}" Margin="2" HorizontalAlignment="Center"/>
+            
+        </DataTemplate>
     </Window.Resources>
-    
-    <Grid>
+
+    <Grid MouseMove="OnMouseMove">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Background="LightGray">
+        <StackPanel Orientation="Horizontal" Background="LightGray" Grid.Row="0">
             <TextBlock Text="{Binding Nodes.Count}"  Margin="15 15 15 15" Width="40" Background="White" IsEnabled="False" HorizontalAlignment="Center" TextAlignment="Center"/>
 
-            <TextBlock Text="{Binding CurrentNodeName}" Margin="15 15 15 15" Width="483" Background="White" IsEnabled="False" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" TextAlignment="Center">
-            </TextBlock>
-            <Button Width="20" Height="20" Margin="5" Command="{Binding BackToRootCommand}"  >
-                <Grid>
-                    <Rectangle Width="20" Height="20" Fill="White"/>
-                    <TextBlock Text="&lt;&lt;" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Grid>
+            <TextBlock Text="{Binding CurrentNodeName}" Margin="15 15 15 15" Width="483" Background="White" IsEnabled="False" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" TextAlignment="Center"/>
+
+            <Button Width="25" Height="20" Margin="5" Command="{Binding BackToRootCommand}" Background="White"  >
+                <TextBlock Text="&lt;&lt;" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
-            <Button Width="20" Height="20" Margin="45 5 5 5" Command="{Binding LargeIconsCommand}">
-                <Grid>
-                    <Rectangle Width="20" Height="20" Fill="White"/>
-                    <TextBlock Text="L" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Grid>
+            <Button Width="20" Height="20" Margin="45 5 5 5" Command="{Binding LargeIconsCommand}" Background="White">
+                <TextBlock Text="L" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
-            <Button Width="20" Height="20" Margin="5" Command="{Binding SmallIconsCommand}">
-                <Grid>
-                    <Rectangle Width="20" Height="20" Fill="White"/>
-                    <TextBlock Text="s" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Grid>
+            <Button Width="20" Height="20" Margin="5" Command="{Binding SmallIconsCommand}" Background="White">
+                <TextBlock Text="s" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
-            <Button Width="20" Height="20" Margin="5">
-                <Grid>
-                    <Rectangle Width="20" Height="20" Fill="White"/>
-                    <TextBlock Text="=" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Grid>
+            <Button Width="20" Height="20" Margin="5" Background="White">
+                <TextBlock Text="=" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
         </StackPanel>
         <ItemsControl 
@@ -72,13 +77,62 @@
                         Orientation="Vertical" 
                         Style="{StaticResource ItemStackPanelStyle}" 
                         MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" >
-                        <Image Source="{Binding BaseNode.LargeIcon, Converter={StaticResource BytesToImageSourceConverter}}" Width="{Binding IconSize}" Height="{Binding IconSize}" Margin="5"/>
-                        <TextBlock FontSize="{Binding FontSize}" Text="{Binding BaseNode.Label}" Margin="2" HorizontalAlignment="Center"/>
+                        <Image 
+                            Source="{Binding LargeIcon, Converter={StaticResource BytesToImageSourceConverter}}" 
+                            Width="{Binding IconSize}" 
+                            Height="{Binding IconSize}" 
+                            Margin="5"/>
+                        <ContentControl Content="{Binding}"  ContentTemplate="{Binding DisplayTemplate}" />
+                        <!-- <TextBlock FontSize="{Binding FontSize}" Text="{Binding Label}" Margin="2" HorizontalAlignment="Center"/>-->
                     </StackPanel>
-                    
+
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <StackPanel Background="LightGray" HorizontalAlignment="Stretch"  Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray" >
+                <Button Width="200" Height="20" Margin="5" Command="{Binding ChangeFontCommand}" Background="White" >
+                    <TextBlock Text="Change Item Font" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+                <Button Width="200" Height="20" Margin="5" Command="{Binding BackToRootCommand}" Background="White" >
+                    <TextBlock Text="Change ListView Font" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+                <Button Width="200" Height="20" Margin="5" Command="{Binding BackToRootCommand}" Background="White" >
+                    <TextBlock Text="Set Default Font" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+
+            <Grid Background="LightGray" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" Margin="5 0">
+                    <Button Width="25" Height="20" Command="{Binding BackToRootCommand}" Background="White" Margin="5 0">
+                        <TextBlock Text="&lt;-&gt;" Foreground="Black"/>
+                    </Button>
+                    <Button Width="25" Height="20" Command="{Binding BackToRootCommand}" Background="White" Margin="5 0">
+                        <TextBlock Text="||" Foreground="Black"/>
+                    </Button>
+                </StackPanel>
+
+
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 0 30 0">
+                    <Border  BorderBrush="Black" BorderThickness=".5" Height="20" HorizontalAlignment="Stretch" Margin="5 0 50 0">
+                        <TextBlock Text="{Binding MousePosition, StringFormat='MousePos: [{0:F0}]'}" Foreground="Black" Width="200" IsEnabled="False" TextAlignment="Center"/>
+                    </Border>
+                    <Button Width="70" Height="20" Command="{Binding CloseCommand}" Background="White" Margin="5 0" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+                        <TextBlock Text="Cancel" Foreground="Black"/>
+                    </Button>
+                    <Button Width="70" Height="20"  Command="{Binding CloseCommand}" Background="LightBlue" Margin="5 0" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+                        <TextBlock Text="Ok" Foreground="Black"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
     </Grid>
 
 </Window>

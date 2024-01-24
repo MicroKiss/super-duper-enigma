@@ -5,6 +5,8 @@ using WpfApp1.Commands;
 using System.Windows.Input;
 using WpfApp1.Services;
 using System.ComponentModel;
+using System.Windows;
+using System.Reflection.Metadata;
 
 namespace WpfApp1.ViewModel
 {
@@ -44,12 +46,31 @@ namespace WpfApp1.ViewModel
                 }
             }
         }
+
+        private Point _mousePosition;
+
+        public Point MousePosition
+        {
+            get { return _mousePosition; }
+            set
+            {
+                if (_mousePosition != value) {
+                    _mousePosition = value;
+                    OnPropertyChanged(nameof(MousePosition));
+                }
+            }
+        }
+
+
+
         public ICommand LargeIconsCommand { get; set; }
         public ICommand SmallIconsCommand { get; set; }
         public ICommand SelectNodeCommand { get; set; }
         public ICommand SelectNothingCommand { get; set; }
         public ICommand OpenNodeCommand { get; set; }
         public ICommand BackToRootCommand { get; set; }
+        public ICommand CloseCommand { get; set; }
+        public ICommand ChangeFontCommand { get; set; }
 
         private int? selectedNodeIndex;
         private bool atRootLevel;
@@ -64,6 +85,7 @@ namespace WpfApp1.ViewModel
         {
             connector = new ConnectorMock();
             Nodes = NodeConverterService.ConvertNodesToViewNodes(connector.GetRootNodes());
+            MousePosition = new Point(0, 0);
             viewType = View.largeIcons;
 
             LargeIconsCommand = new RelayCommand(ShowLargeIcons, CanShowLargeIcons);
@@ -72,9 +94,42 @@ namespace WpfApp1.ViewModel
             SelectNothingCommand = new RelayCommand(HandleSelectNothing, CanHandleSelectNothing);
             OpenNodeCommand = new RelayCommand(HandleOpenNode, CanHandleOpenNode);
             BackToRootCommand = new RelayCommand(HandleBackToRoot, CanHandleBackToRoot);
+            CloseCommand = new RelayCommand(HandleClose, CanHandleClose);
+            ChangeFontCommand = new RelayCommand(HandleChangeFont, CanHandleHandleChangeFont);
             selectedNodeIndex = null;
+
             atRootLevel = true;
             CurrentNodeName = "Root";
+        }
+
+        private bool CanHandleHandleChangeFont (object obj)
+        {
+            return true;
+        }
+
+        private void HandleChangeFont (object obj)
+        {
+            if (selectedNodeIndex != null) {
+                var currentDisplayMode = Nodes[selectedNodeIndex.Value].DisplayMode;
+                var newDisplayMode = (DisplayMode)(((int)currentDisplayMode.Value + 1) % Enum.GetValues(typeof(DisplayMode)).Length);
+                Nodes[selectedNodeIndex.Value].DisplayMode = newDisplayMode;
+            } else {
+                foreach (NodeViewModel node in Nodes) {
+                    var currentDisplayMode = node.DisplayMode;
+                    var newDisplayMode = (DisplayMode)(((int)currentDisplayMode.Value + 1) % Enum.GetValues(typeof(DisplayMode)).Length);
+                    node.DisplayMode = newDisplayMode;
+                }
+            }
+        }
+
+        private bool CanHandleClose (object obj)
+        {
+            return true;
+        }
+
+        private void HandleClose (object obj)
+        {
+            (obj as Window)?.Close();
         }
 
         private bool CanHandleSelectNothing (object obj)
@@ -116,7 +171,7 @@ namespace WpfApp1.ViewModel
             if (obj is NodeViewModel currentNode) {
                 uint index = (uint)Nodes.IndexOf(currentNode);
                 Nodes = NodeConverterService.ConvertNodesToViewNodes(connector.GetChildrenOfRootNode(index));
-                CurrentNodeName = currentNode.BaseNode.Label;
+                CurrentNodeName = currentNode.Label;
                 selectedNodeIndex = null;
                 atRootLevel = false;
                 ChangeToViewType(viewType);
