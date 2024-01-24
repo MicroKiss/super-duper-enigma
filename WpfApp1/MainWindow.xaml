@@ -18,9 +18,9 @@
         <StackPanel Orientation="Horizontal" Background="LightGray">
             <TextBlock Text="{Binding NodeCollection.Count}"  Margin="15 15 15 15" Width="40" Background="White" IsEnabled="False" HorizontalAlignment="Center" TextAlignment="Center"/>
 
-            <TextBlock Text="Objects" Margin="15 15 15 15" Width="483" Background="White" IsEnabled="False" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" TextAlignment="Center">
+            <TextBlock Text="Clicked Item" Margin="15 15 15 15" Width="483" Background="White" IsEnabled="False" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" TextAlignment="Center">
             </TextBlock>
-            <ContentControl Width="20" Height="20" Margin="5" IsEnabled="False" MouseLeftButtonDown="OnBackClicked">
+            <ContentControl Width="20" Height="20" Margin="5"  MouseLeftButtonDown="OnBackClicked">
                 <Grid>
                     <Rectangle Width="20" Height="20" Fill="White"/>
                     <TextBlock Text="&lt;&lt;" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -48,10 +48,11 @@
         <ItemsControl x:Name="itemsControl" ItemsSource="{Binding NodeCollection}" Background="White"  Grid.Row="1">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
+                    <WrapPanel/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
+                
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" MouseLeftButtonDown="OnItemClicked">
                         <Image x:Name="myImage" Source="{Binding LargeIcon, Converter={StaticResource BytesToImageSourceConverter}}" Width="64" Height="64" Margin="5"/>

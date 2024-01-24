@@ -10,12 +10,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using static System.Net.Mime.MediaTypeNames;
 using Image = System.Windows.Controls.Image;
 using System.ComponentModel;
 
@@ -24,6 +21,21 @@ namespace WpfApp1
 
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        //different datatemplates in listview
+        //clicked item legyen felul megjelenitve nevkent
+        // csak 2 szintu.
+        /*
+        public bool MyProperty
+        {
+            get { return (bool)GetValue(MyPropertyProperty); }
+            set { SetValue(MyPropertyProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyPropertyProperty =
+            DependencyProperty.Register("MyProperty", typeof(bool), typeof(MainWindow), new PropertyMetadata(0));
+
+        */
         private ObservableCollection<Node> _nodeCollection;
         public ObservableCollection<Node> NodeCollection
         {
@@ -72,6 +84,7 @@ namespace WpfApp1
             if (index == null) {
                 NodeCollection = new ObservableCollection<Node>(connector.GetRootNodes());
             } else {
+                NodeCollection = new ObservableCollection<Node>(connector.GetChildrenOfRootNode(0));
                 // a jelenlegi megjelenites n edik elemere rakattintva ki kellene nyerni azon elem gyerekeit.
                 // ehhez kellene a valodi indexe annak a node-nak amit nem tudnuk :/
                 //uint? realIndex = connector.GetChildNodeAtIndex(currentNodeIndex.Value, index.Value);
@@ -97,7 +110,7 @@ namespace WpfApp1
         }        
         private void OnBackClicked(object sender, MouseButtonEventArgs e)
         {
-            // here implement going back to parent
+            NodeCollection = new ObservableCollection<Node>(connector.GetRootNodes());
         }
 
 
