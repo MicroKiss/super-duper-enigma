@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp1
+namespace WpfApp1.Model
 {
     interface IConnector
     {
@@ -34,24 +34,30 @@ namespace WpfApp1
         Dictionary<uint, Node> parents;
         List<Node> nodes;
         List<Node> rootNodes;
-        public ConnectorMock() {
+        public ConnectorMock()
+        {
 
             nodes = new List<Node>();
             for (int i = 0; i < 10; i++)
                 nodes.Add(new Node("Node " + i.ToString()));
 
-            rootNodes = new List<Node> { nodes[0] };
+            rootNodes = new List<Node> { nodes[0], nodes[1], nodes[2] };
 
-            children = new Dictionary<uint, List<Node>> { { 0, new List<Node>{ nodes[1], nodes[2] } } };
+            children = new Dictionary<uint, List<Node>> {
+                { 0, new List<Node>{ nodes[3], nodes[4] } },
+                { 1, new List<Node>{ nodes[5] } },
+                { 2, new List<Node>{ nodes[6], nodes[7], nodes[8], nodes[9] } },
+
+            };
             parents = new Dictionary<uint, Node> { { 1, nodes[0] }, { 2, nodes[0] } };
         }
 
-        public List<Node> GetRootNodes() 
+        public List<Node> GetRootNodes()
         {
             return rootNodes;
         }
 
-        public Node GetRootNodeAtIndex(uint rootNodeIndex) 
+        public Node GetRootNodeAtIndex(uint rootNodeIndex)
         {
             return parents[rootNodeIndex];
         }
@@ -60,12 +66,12 @@ namespace WpfApp1
         {
             nodes[(int)rootNodeIndex].Label = label;
         }
-        public void SetRootNodeDisplayMode(uint rootNodeIndex, DisplayMode? displayMode) 
+        public void SetRootNodeDisplayMode(uint rootNodeIndex, DisplayMode? displayMode)
         {
             nodes[(int)rootNodeIndex].DisplayMode = displayMode;
-        
+
         }
-        public List<Node> GetChildrenOfRootNode(uint rootNodeIndex) 
+        public List<Node> GetChildrenOfRootNode(uint rootNodeIndex)
         {
             return children[rootNodeIndex];
         }
@@ -73,11 +79,12 @@ namespace WpfApp1
         {
             return GetChildrenOfRootNode(rootNodeIndex)[(int)childNodeIndex];
         }
-        public void SetChildNodeLabel(uint rootNodeIndex, uint childNodeIndex, string label) 
+        public void SetChildNodeLabel(uint rootNodeIndex, uint childNodeIndex, string label)
         {
             GetChildNodeAtIndex(rootNodeIndex, childNodeIndex).Label = label;
         }
-        public void SetChildNodeDisplayMode(uint rootNodeIndex, uint childNodeIndex, DisplayMode? displayMode) {
+        public void SetChildNodeDisplayMode(uint rootNodeIndex, uint childNodeIndex, DisplayMode? displayMode)
+        {
             GetChildNodeAtIndex(rootNodeIndex, childNodeIndex).DisplayMode = displayMode;
         }
     }

@@ -8,6 +8,15 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <local:BytesToImageSourceConverter x:Key="BytesToImageSourceConverter"/>
+        <local:YourValueConverter x:Key="YourValueConverter"/>
+        <Style x:Key="ItemStackPanelStyle" TargetType="StackPanel">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Selected}" Value="True">
+                    <Setter Property="Background" Value="LightBlue"/>
+                </DataTrigger>
+                <!-- Add more DataTriggers as needed -->
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     
     <Grid>
@@ -16,36 +25,36 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Background="LightGray">
-            <TextBlock Text="{Binding NodeCollection.Count}"  Margin="15 15 15 15" Width="40" Background="White" IsEnabled="False" HorizontalAlignment="Center" TextAlignment="Center"/>
+            <TextBlock Text="{Binding Nodes.Count}"  Margin="15 15 15 15" Width="40" Background="White" IsEnabled="False" HorizontalAlignment="Center" TextAlignment="Center"/>
 
-            <TextBlock Text="Clicked Item" Margin="15 15 15 15" Width="483" Background="White" IsEnabled="False" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" TextAlignment="Center">
+            <TextBlock Text="{Binding CurrentNodeName}" Margin="15 15 15 15" Width="483" Background="White" IsEnabled="False" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" TextAlignment="Center">
             </TextBlock>
-            <ContentControl Width="20" Height="20" Margin="5"  MouseLeftButtonDown="OnBackClicked">
+            <Button Width="20" Height="20" Margin="5" Command="{Binding BackToRootCommand}"  >
                 <Grid>
                     <Rectangle Width="20" Height="20" Fill="White"/>
                     <TextBlock Text="&lt;&lt;" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
-            </ContentControl>
-            <ContentControl Width="20" Height="20" Margin="45 5 5 5" MouseLeftButtonDown="OnLargeClicked">
+            </Button>
+            <Button Width="20" Height="20" Margin="45 5 5 5" Command="{Binding LargeIconsCommand}">
                 <Grid>
                     <Rectangle Width="20" Height="20" Fill="White"/>
                     <TextBlock Text="L" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
-            </ContentControl>
-            <ContentControl Width="20" Height="20" Margin="5" MouseLeftButtonDown="OnSmallClicked">
+            </Button>
+            <Button Width="20" Height="20" Margin="5" Command="{Binding SmallIconsCommand}">
                 <Grid>
                     <Rectangle Width="20" Height="20" Fill="White"/>
                     <TextBlock Text="s" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
-            </ContentControl>
-            <ContentControl Width="20" Height="20" Margin="5">
+            </Button>
+            <Button Width="20" Height="20" Margin="5">
                 <Grid>
                     <Rectangle Width="20" Height="20" Fill="White"/>
                     <TextBlock Text="=" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
-            </ContentControl>
+            </Button>
         </StackPanel>
-        <ItemsControl x:Name="itemsControl" ItemsSource="{Binding NodeCollection}" Background="White"  Grid.Row="1">
+        <ItemsControl x:Name="itemsControl" ItemsSource="{Binding Nodes}" Background="White"  Grid.Row="1">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>
@@ -54,10 +63,14 @@
             <ItemsControl.ItemTemplate>
                 
                 <DataTemplate>
-                    <StackPanel Orientation="Vertical" MouseLeftButtonDown="OnItemClicked">
-                        <Image x:Name="myImage" Source="{Binding LargeIcon, Converter={StaticResource BytesToImageSourceConverter}}" Width="64" Height="64" Margin="5"/>
-                        <TextBlock x:Name="myLabel" FontSize="12" Text="{Binding Label}" Margin="2" HorizontalAlignment="Center"/>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Style="{StaticResource ItemStackPanelStyle}" 
+                        MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" >
+                        <Image Source="{Binding BaseNode.LargeIcon, Converter={StaticResource BytesToImageSourceConverter}}" Width="{Binding IconSize}" Height="{Binding IconSize}" Margin="5"/>
+                        <TextBlock FontSize="{Binding FontSize}" Text="{Binding BaseNode.Label}" Margin="2" HorizontalAlignment="Center"/>
                     </StackPanel>
+                    
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
