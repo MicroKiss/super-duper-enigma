@@ -11,10 +11,10 @@ namespace WpfApp1.Services
 {
     public class NodeConverterService
     {
-        static public ObservableCollection<ViewNode> ConvertNodesToViewNodes (List<Node> nodes)
+        static public ObservableCollection<NodeViewModel> ConvertNodesToViewNodes (List<Node> nodes)
         {
-            return new ObservableCollection<ViewNode>(
-                nodes.Select(node => new ViewNode(node))
+            return new ObservableCollection<NodeViewModel>(
+                nodes.Select(node => new NodeViewModel(node))
             );
         }
     }

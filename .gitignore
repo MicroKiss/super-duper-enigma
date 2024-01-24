@@ -4,4 +4,6 @@
 **/Release
 **/build
 **/.vs
+**/obj
+**/bin
 Common Error Handler/erroroutputfile.txt

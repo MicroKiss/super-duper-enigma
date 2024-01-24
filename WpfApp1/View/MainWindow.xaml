@@ -54,14 +54,19 @@
                 </Grid>
             </Button>
         </StackPanel>
-        <ItemsControl x:Name="itemsControl" ItemsSource="{Binding Nodes}" Background="White"  Grid.Row="1">
+        <ItemsControl 
+            x:Name="itemsControl" 
+            ItemsSource="{Binding Nodes}" 
+            Background="White"  
+            Grid.Row="1"
+            MouseLeftButtonDown="itemsControl_MouseLeftButtonDown"
+            >
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                
                 <DataTemplate>
                     <StackPanel 
                         Orientation="Vertical" 

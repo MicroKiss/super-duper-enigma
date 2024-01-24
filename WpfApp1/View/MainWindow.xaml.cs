@@ -36,7 +36,7 @@ namespace WpfApp1
             // Check if the sender is a FrameworkElement
             if (sender is FrameworkElement frameworkElement) {
                 // Access the data context if it's set
-                if (frameworkElement.DataContext is ViewNode vnode) {
+                if (frameworkElement.DataContext is NodeViewModel vnode) {
                     if (DataContext is MainViewModel viewModel) {
                         if (e.ClickCount == 1) { 
                             viewModel.SelectNodeCommand.Execute(vnode);
@@ -46,6 +46,34 @@ namespace WpfApp1
                     }
                 }
             }
+        }
+
+
+
+        private void itemsControl_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
+        {
+            // Get the UI element that was clicked
+            var clickedElement = e.OriginalSource as UIElement;
+
+            // Check if the click was on the StackPanel or its children
+            if (!IsClickOnStackPanel(clickedElement)) {
+                if (DataContext is MainViewModel viewModel)
+                    viewModel.SelectNothingCommand.Execute(sender);
+            }
+        }
+
+        private bool IsClickOnStackPanel (UIElement clickedElement)
+        {
+            // Check if the clicked element is a StackPanel or its child
+            while (clickedElement != null) {
+                if (clickedElement is StackPanel) {
+                    return true;
+                }
+
+                clickedElement = VisualTreeHelper.GetParent(clickedElement) as UIElement;
+            }
+
+            return false;
         }
     }
 
@@ -73,7 +101,7 @@ namespace WpfApp1
     {
         public object Convert (object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ViewNode vnode) {
+            if (value is NodeViewModel vnode) {
                 return vnode.Selected;
             }
             return false; 

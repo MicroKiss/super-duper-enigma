@@ -4,7 +4,7 @@ using WpfApp1.Model;
 namespace WpfApp1.ViewModel
 {
     
-    public class ViewNode : INotifyPropertyChanged
+    public class NodeViewModel : INotifyPropertyChanged
     {
         public Node BaseNode { get; }
         private int _iconSize;
@@ -47,7 +47,7 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        public ViewNode (Node baseNode)
+        public NodeViewModel (Node baseNode)
         {
             BaseNode = baseNode;
             Selected = false;

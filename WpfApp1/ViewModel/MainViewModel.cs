@@ -8,12 +8,19 @@ using System.ComponentModel;
 
 namespace WpfApp1.ViewModel
 {
+    enum View
+    {
+        smallIcons,
+        largeIcons,
+        list
+    }
     internal class MainViewModel : INotifyPropertyChanged
     {
         private ConnectorMock connector;
+        private View viewType;
 
-        private ObservableCollection<ViewNode> _nodes;
-        public ObservableCollection<ViewNode> Nodes
+        private ObservableCollection<NodeViewModel> _nodes;
+        public ObservableCollection<NodeViewModel> Nodes
         {
             get { return _nodes; }
             set
@@ -40,6 +47,7 @@ namespace WpfApp1.ViewModel
         public ICommand LargeIconsCommand { get; set; }
         public ICommand SmallIconsCommand { get; set; }
         public ICommand SelectNodeCommand { get; set; }
+        public ICommand SelectNothingCommand { get; set; }
         public ICommand OpenNodeCommand { get; set; }
         public ICommand BackToRootCommand { get; set; }
 
@@ -56,15 +64,30 @@ namespace WpfApp1.ViewModel
         {
             connector = new ConnectorMock();
             Nodes = NodeConverterService.ConvertNodesToViewNodes(connector.GetRootNodes());
+            viewType = View.largeIcons;
 
             LargeIconsCommand = new RelayCommand(ShowLargeIcons, CanShowLargeIcons);
             SmallIconsCommand = new RelayCommand(ShowSmallIcons, CanShowSmallIcons);
             SelectNodeCommand = new RelayCommand(HandleSelectNode, CanHandleSelectNode);
+            SelectNothingCommand = new RelayCommand(HandleSelectNothing, CanHandleSelectNothing);
             OpenNodeCommand = new RelayCommand(HandleOpenNode, CanHandleOpenNode);
             BackToRootCommand = new RelayCommand(HandleBackToRoot, CanHandleBackToRoot);
             selectedNodeIndex = null;
             atRootLevel = true;
             CurrentNodeName = "Root";
+        }
+
+        private bool CanHandleSelectNothing (object obj)
+        {
+            return true;
+        }
+
+        private void HandleSelectNothing (object obj)
+        {
+            if (selectedNodeIndex != null) {
+                Nodes[selectedNodeIndex.Value].Selected = false;
+            selectedNodeIndex = null;
+            }
         }
 
         private bool CanHandleBackToRoot (object obj)
@@ -78,6 +101,7 @@ namespace WpfApp1.ViewModel
             selectedNodeIndex = null;
             atRootLevel = true;
             CurrentNodeName = "Root";
+            ChangeToViewType(viewType);
         }
 
         private bool CanHandleOpenNode (object obj)
@@ -89,12 +113,13 @@ namespace WpfApp1.ViewModel
         {
             if (!atRootLevel)
                 return;
-            if (obj is ViewNode currentNode) {
+            if (obj is NodeViewModel currentNode) {
                 uint index = (uint)Nodes.IndexOf(currentNode);
                 Nodes = NodeConverterService.ConvertNodesToViewNodes(connector.GetChildrenOfRootNode(index));
                 CurrentNodeName = currentNode.BaseNode.Label;
                 selectedNodeIndex = null;
                 atRootLevel = false;
+                ChangeToViewType(viewType);
             }
         }
 
@@ -105,7 +130,7 @@ namespace WpfApp1.ViewModel
 
         private void HandleSelectNode (object obj)
         {
-            if (obj is ViewNode currentNode) {
+            if (obj is NodeViewModel currentNode) {
                 int index = Nodes.IndexOf(currentNode);
 
                 if (selectedNodeIndex != null) {
@@ -126,7 +151,7 @@ namespace WpfApp1.ViewModel
 
         private void ShowSmallIcons (object obj)
         {
-            ChangeIconAndFontSize(32, 10);
+            ChangeToViewType(View.smallIcons);
         }
 
         private bool CanShowLargeIcons (object obj)
@@ -136,11 +161,29 @@ namespace WpfApp1.ViewModel
 
         private void ShowLargeIcons (object obj)
         {
-            ChangeIconAndFontSize(64, 12);
+            ChangeToViewType(View.largeIcons);
+        }
+
+        private void ChangeToViewType (View newType) {
+            switch (newType) {
+                case View.smallIcons:
+                    ChangeIconAndFontSize(32, 10);
+                    break;
+                case View.largeIcons:
+                    ChangeIconAndFontSize(64, 12);
+                    break;
+                case View.list:
+                    throw new NotImplementedException();
+                    break;
+                default:
+                    throw new NotImplementedException();
+                    break;
+            }
+            viewType = newType;
         }
 
         private void ChangeIconAndFontSize (int iconSize, int fontSize) {
-            foreach (ViewNode node in Nodes) {
+            foreach (NodeViewModel node in Nodes) {
                 node.IconSize = iconSize;
                 node.FontSize = fontSize;
             }
