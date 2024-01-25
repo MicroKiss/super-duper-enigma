@@ -15,11 +15,11 @@ using System.Globalization;
 using System.IO;
 using Image = System.Windows.Controls.Image;
 using System.ComponentModel;
-using static WpfApp1.MainWindow;
-using WpfApp1.Model;
-using WpfApp1.ViewModel;
+using static WpfUIExperiment.MainWindow;
+using WpfUIExperiment.Model;
+using WpfUIExperiment.ViewModel;
 
-namespace WpfApp1
+namespace WpfUIExperiment
 {
 
     public partial class MainWindow : Window

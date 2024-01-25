@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using WpfApp1.Model;
-using WpfApp1.Commands;
+using WpfUIExperiment.Model;
+using WpfUIExperiment.Commands;
 using System.Windows.Input;
-using WpfApp1.Services;
+using WpfUIExperiment.Services;
 using System.ComponentModel;
 using System.Windows;
 using System.Reflection.Metadata;
 
-namespace WpfApp1.ViewModel
+namespace WpfUIExperiment.ViewModel
 {
     enum View
     {
@@ -71,6 +71,7 @@ namespace WpfApp1.ViewModel
         public ICommand BackToRootCommand { get; set; }
         public ICommand CloseCommand { get; set; }
         public ICommand ChangeFontCommand { get; set; }
+        public ICommand ChangeFontToDefaultCommand { get; set; }
 
         private int? selectedNodeIndex;
         private bool atRootLevel;
@@ -88,23 +89,40 @@ namespace WpfApp1.ViewModel
             MousePosition = new Point(0, 0);
             viewType = View.largeIcons;
 
-            LargeIconsCommand = new RelayCommand(ShowLargeIcons, CanShowLargeIcons);
-            SmallIconsCommand = new RelayCommand(ShowSmallIcons, CanShowSmallIcons);
-            SelectNodeCommand = new RelayCommand(HandleSelectNode, CanHandleSelectNode);
-            SelectNothingCommand = new RelayCommand(HandleSelectNothing, CanHandleSelectNothing);
+            LargeIconsCommand = new RelayCommand(ShowLargeIcons, AlwaysTrue);
+            SmallIconsCommand = new RelayCommand(ShowSmallIcons, AlwaysTrue);
+            SelectNodeCommand = new RelayCommand(HandleSelectNode, AlwaysTrue);
+            SelectNothingCommand = new RelayCommand(HandleSelectNothing, AlwaysTrue);
             OpenNodeCommand = new RelayCommand(HandleOpenNode, CanHandleOpenNode);
             BackToRootCommand = new RelayCommand(HandleBackToRoot, CanHandleBackToRoot);
-            CloseCommand = new RelayCommand(HandleClose, CanHandleClose);
-            ChangeFontCommand = new RelayCommand(HandleChangeFont, CanHandleHandleChangeFont);
+            CloseCommand = new RelayCommand(HandleClose, AlwaysTrue);
+            ChangeFontCommand = new RelayCommand(HandleChangeFont, AlwaysTrue);
+            ChangeFontToDefaultCommand = new RelayCommand(HandleChangeFontToDefault, CanChangeFontToDefault);
             selectedNodeIndex = null;
 
             atRootLevel = true;
             CurrentNodeName = "Root";
         }
 
-        private bool CanHandleHandleChangeFont (object obj)
+        private bool AlwaysTrue (object obj)
         {
             return true;
+        }
+
+        private bool CanChangeFontToDefault (object obj)
+        {
+            return true;
+        }
+
+        private void HandleChangeFontToDefault (object obj)
+        {
+            if (selectedNodeIndex != null) {
+                Nodes[selectedNodeIndex.Value].DisplayMode = DisplayMode.Regular;
+            } else {
+                foreach (NodeViewModel node in Nodes) {
+                    node.DisplayMode = DisplayMode.Regular;
+                }
+            }
         }
 
         private void HandleChangeFont (object obj)
@@ -122,26 +140,18 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        private bool CanHandleClose (object obj)
-        {
-            return true;
-        }
 
         private void HandleClose (object obj)
         {
             (obj as Window)?.Close();
         }
 
-        private bool CanHandleSelectNothing (object obj)
-        {
-            return true;
-        }
 
         private void HandleSelectNothing (object obj)
         {
             if (selectedNodeIndex != null) {
                 Nodes[selectedNodeIndex.Value].Selected = false;
-            selectedNodeIndex = null;
+                selectedNodeIndex = null;
             }
         }
 
@@ -178,10 +188,6 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        private bool CanHandleSelectNode (object obj)
-        {
-            return true;
-        }
 
         private void HandleSelectNode (object obj)
         {
@@ -199,27 +205,20 @@ namespace WpfApp1.ViewModel
         }
 
 
-        private bool CanShowSmallIcons (object obj)
-        {
-            return true;
-        }
 
         private void ShowSmallIcons (object obj)
         {
             ChangeToViewType(View.smallIcons);
         }
 
-        private bool CanShowLargeIcons (object obj)
-        {
-            return true;
-        }
 
         private void ShowLargeIcons (object obj)
         {
             ChangeToViewType(View.largeIcons);
         }
 
-        private void ChangeToViewType (View newType) {
+        private void ChangeToViewType (View newType)
+        {
             switch (newType) {
                 case View.smallIcons:
                     ChangeIconAndFontSize(32, 10);
@@ -237,7 +236,8 @@ namespace WpfApp1.ViewModel
             viewType = newType;
         }
 
-        private void ChangeIconAndFontSize (int iconSize, int fontSize) {
+        private void ChangeIconAndFontSize (int iconSize, int fontSize)
+        {
             foreach (NodeViewModel node in Nodes) {
                 node.IconSize = iconSize;
                 node.FontSize = fontSize;

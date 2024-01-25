@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
-using WpfApp1.Model;
+using WpfUIExperiment.Model;
 
-namespace WpfApp1.ViewModel
+namespace WpfUIExperiment.ViewModel
 {
-    
+
     public class NodeViewModel : INotifyPropertyChanged
     {
         private string _label { get; set; }
@@ -102,7 +102,7 @@ namespace WpfApp1.ViewModel
         public NodeViewModel (Node baseNode)
         {
             Label = baseNode.Label;
-            DisplayMode =  baseNode.DisplayMode;
+            DisplayMode = baseNode.DisplayMode;
             LargeIcon = baseNode.LargeIcon;
             SmallIcon = baseNode.SmallIcon;
             Selected = false;
@@ -117,28 +117,34 @@ namespace WpfApp1.ViewModel
         }
 
 
+        private static readonly Dictionary<WpfUIExperiment.Model.DisplayMode, string> TemplateKeyMapping = new Dictionary<WpfUIExperiment.Model.DisplayMode, string>
+        {
+            { WpfUIExperiment.Model.DisplayMode.Bold, "BoldTextTemplate" },
+            { WpfUIExperiment.Model.DisplayMode.Italic, "ItalicTextTemplate" },
+            { WpfUIExperiment.Model.DisplayMode.Underlined, "UnderLinedTextTemplate" },
+            { WpfUIExperiment.Model.DisplayMode.Regular, "RegularTextTemplate" },
+        };
+
+
 
         public DataTemplate DisplayTemplate
         {
             get
             {
-                DataTemplate ret = null;
-                switch (_displayMode) {
-                    case WpfApp1.Model.DisplayMode.Bold:
-                        ret = (DataTemplate)Application.Current.MainWindow.Resources["BoldTextTemplate"];
-                        break;
-                    case WpfApp1.Model.DisplayMode.Italic:
-                        ret = (DataTemplate)Application.Current.MainWindow.Resources["ItalicTextTemplate"];
-                        break;
-                    case Model.DisplayMode.Underlined:
-                        ret = (DataTemplate)Application.Current.MainWindow.Resources["UnderLinedTextTemplate"];
-                        break;
-                    // Add cases for other display modes or a default case if needed
-                    default:
-                        ret = (DataTemplate)Application.Current.MainWindow.Resources["RegularTextTemplate"];
-                        break;
+                var dict = (ResourceDictionary)Application.Current.MainWindow.FindResource("NodeViewModelResources");
+
+                if (_displayMode == null)
+                    return (DataTemplate)dict["RegularTextTemplate"];
+
+                string templateKey = TemplateKeyMapping.GetValueOrDefault(_displayMode.Value, "RegularTextTemplate");
+
+                if (dict.Contains(templateKey)) {
+                    return (DataTemplate)dict[templateKey];
+                } else {
+                    // Handle error: Template not found
+                    // You might want to log a warning or provide a default template
+                    return (DataTemplate)dict["RegularTextTemplate"];
                 }
-                return ret;
             }
         }
     }

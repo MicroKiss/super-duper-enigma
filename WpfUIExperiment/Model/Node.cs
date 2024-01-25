@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
-namespace WpfApp1.Model
+namespace WpfUIExperiment.Model
 {
     public enum DisplayMode
     {
@@ -25,7 +25,7 @@ namespace WpfApp1.Model
         public List<byte>? LargeIcon { get; set; }
         public List<byte>? SmallIcon { get; set; }
 
-        public Node (string label, DisplayMode? displayMode = WpfApp1.Model.DisplayMode.Regular)
+        public Node (string label, DisplayMode? displayMode = WpfUIExperiment.Model.DisplayMode.Regular)
         {
             Label = label;
             DisplayMode = displayMode;

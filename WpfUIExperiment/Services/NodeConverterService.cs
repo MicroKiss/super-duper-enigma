@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfApp1.Model;
-using WpfApp1.ViewModel;
+using WpfUIExperiment.Model;
+using WpfUIExperiment.ViewModel;
 
-namespace WpfApp1.Services
+namespace WpfUIExperiment.Services
 {
     public class NodeConverterService
     {
