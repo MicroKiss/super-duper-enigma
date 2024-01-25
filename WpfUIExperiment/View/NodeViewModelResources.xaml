@@ -3,19 +3,54 @@
     
   
     <DataTemplate x:Key="RegularTextTemplate">
-        <TextBlock FontSize="{Binding FontSize}" Text="{Binding Label}" Margin="2" HorizontalAlignment="Center"/>
+        <TextBlock FontSize="{Binding FontSize}" 
+                   Text="{Binding Label}" 
+                   TextAlignment="Center" 
+                   Width="{Binding IconSize}"  
+                   MaxHeight="40"
+                   TextWrapping="Wrap" 
+                   TextTrimming="WordEllipsis" 
+                   Margin="2" 
+                   HorizontalAlignment="Center"/>
     </DataTemplate>
 
     <DataTemplate x:Key="BoldTextTemplate">
-        <TextBlock FontSize="{Binding FontSize}" FontWeight="Bold" Text="{Binding Label}" Margin="2" HorizontalAlignment="Center"/>
+        <TextBlock FontSize="{Binding FontSize}" 
+                   FontWeight="Bold" 
+                   Text="{Binding Label}" 
+                   TextAlignment="Center" 
+                   Width="{Binding IconSize}" 
+                   MaxHeight="40"
+                   TextWrapping="Wrap" 
+                   TextTrimming="WordEllipsis" 
+                   Margin="2" 
+                   HorizontalAlignment="Center"/>
     </DataTemplate>
 
     <DataTemplate x:Key="ItalicTextTemplate">
-        <TextBlock FontSize="{Binding FontSize}" FontStyle="Italic" Text="{Binding Label}" Margin="2" HorizontalAlignment="Center"/>
+        <TextBlock FontSize="{Binding FontSize}" 
+                   FontStyle="Italic" 
+                   Text="{Binding Label}" 
+                   TextAlignment="Center" 
+                   Width="{Binding IconSize}" 
+                   MaxHeight="40"
+                   TextWrapping="Wrap" 
+                   TextTrimming="WordEllipsis" 
+                   Margin="2" 
+                   HorizontalAlignment="Center"/>
     </DataTemplate>
 
     <DataTemplate x:Key="UnderLinedTextTemplate">
-        <TextBlock FontSize="{Binding FontSize}" TextDecorations="Underline" Text="{Binding Label}" Margin="2" HorizontalAlignment="Center"/>
+        <TextBlock FontSize="{Binding FontSize}" 
+                   TextDecorations="Underline" 
+                   Text="{Binding Label}" 
+                   TextAlignment="Center" 
+                   Width="{Binding IconSize}" 
+                   MaxHeight="40"
+                   TextWrapping="Wrap" 
+                   TextTrimming="WordEllipsis" 
+                   Margin="2" 
+                   HorizontalAlignment="Center"/>
     </DataTemplate>
     
 </ResourceDictionary>

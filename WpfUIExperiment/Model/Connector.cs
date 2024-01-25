@@ -37,9 +37,19 @@ namespace WpfUIExperiment.Model
         public ConnectorMock()
         {
 
-            nodes = new List<Node>();
-            for (int i = 0; i < 10; i++)
-                nodes.Add(new Node("Node " + i.ToString()));
+            nodes = new List<Node> {
+                new Node("HomeWork ;)"),
+                new Node("Videos"),
+                new Node("Falling of Stalingrad"),
+                new Node("Math"),
+                new Node("Phisycs"),
+                new Node("Cats"),
+                new Node("Beginning"),
+                new Node("End"),
+                new Node("Aftermatch"),
+                new Node("Games"),
+            };
+
 
             rootNodes = new List<Node> { nodes[0], nodes[1], nodes[2] };
 

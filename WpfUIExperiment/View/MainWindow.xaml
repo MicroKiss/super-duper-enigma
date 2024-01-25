@@ -32,24 +32,29 @@
             <RowDefinition Height="Auto"/>
 
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Background="LightGray" Grid.Row="0">
-            <TextBlock Text="{Binding Nodes.Count}"  Margin="15 15 15 15" Width="40" Background="White" IsEnabled="False" HorizontalAlignment="Center" TextAlignment="Center"/>
+        <Grid Background="LightGray" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Background="LightGray" >
+                <TextBlock Text="{Binding Nodes.Count}"  Margin="15 15 15 15" Width="40" Background="White" IsEnabled="False" HorizontalAlignment="Center" TextAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray" >
+                <TextBlock Text="{Binding CurrentNodeName}" Margin="15 15 15 15" Width="Auto" MinWidth="150" Background="White" IsEnabled="False" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" TextAlignment="Center"/>
 
-            <TextBlock Text="{Binding CurrentNodeName}" Margin="15 15 15 15" Width="483" Background="White" IsEnabled="False" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" TextAlignment="Center"/>
-
-            <Button Width="25" Height="20" Margin="5" Command="{Binding BackToRootCommand}" Background="White"  >
-                <TextBlock Text="&lt;&lt;" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Button>
-            <Button Width="20" Height="20" Margin="45 5 5 5" Command="{Binding LargeIconsCommand}" Background="White">
-                <TextBlock Text="L" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Button>
-            <Button Width="20" Height="20" Margin="5" Command="{Binding SmallIconsCommand}" Background="White">
-                <TextBlock Text="s" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Button>
-            <Button Width="20" Height="20" Margin="5" Background="White">
-                <TextBlock Text="=" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Button>
-        </StackPanel>
+                <Button Width="25" Height="20" Margin="5" Command="{Binding BackToRootCommand}" Background="White"  >
+                    <TextBlock Text="&lt;&lt;" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="LightGray" >
+                <Button Width="20" Height="20" Margin="45 5 5 5" Command="{Binding LargeIconsCommand}" Background="White">
+                    <TextBlock Text="L" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+                <Button Width="20" Height="20" Margin="5" Command="{Binding SmallIconsCommand}" Background="White">
+                    <TextBlock Text="s" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+                <Button Width="20" Height="20" Margin="5" Background="White">
+                    <TextBlock Text="=" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+        </Grid>
         <ItemsControl 
             x:Name="itemsControl" 
             ItemsSource="{Binding Nodes}" 
@@ -100,7 +105,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal" Margin="5 0">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 0">
                     <Button Width="25" Height="20" Command="{Binding BackToRootCommand}" Background="White" Margin="5 0">
                         <TextBlock Text="&lt;-&gt;" Foreground="Black"/>
                     </Button>
@@ -109,7 +114,7 @@
                     </Button>
                 </StackPanel>
 
-
+                <StackPanel Grid.Column="1"/>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 0 30 0">
                     <Border  BorderBrush="Black" BorderThickness=".5" Height="20" HorizontalAlignment="Stretch" Margin="5 0 50 0">
