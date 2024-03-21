@@ -147,5 +147,8 @@ namespace WpfUIExperiment.ViewModel
                 }
             }
         }
+
     }
+
+
 }
