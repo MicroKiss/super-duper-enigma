@@ -1,0 +1,65 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "command": "cmake",
+            "args": [
+                "-S",
+                "${workspaceRoot}",
+                "-B",
+                "${workspaceRoot}\\build"
+            ]
+        },
+        {
+            "label": "build release",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceRoot}\\build",
+                "--config",
+                "Release"
+            ],
+            "dependsOn": [
+                "cmake"
+            ]
+        },
+        {
+            "label": "build debug",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceRoot}\\build",
+                "--config",
+                "Debug"
+            ],
+            "dependsOn": [
+                "cmake"
+            ]
+        },
+        {
+            "label": "run release",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "command": ".\\build\\Release\\TestProject.exe",
+            "dependsOn": [
+                "build release"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
